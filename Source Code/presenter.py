@@ -24,24 +24,24 @@ def show_result(city, tag):
     id = city_dict[city]
     daytag = day_tag[tag]
     data = BMKGScraper(id, daytag).scraping
-
+    
     datalist = [datum for datum in data]
-    if_weather = all([isinstance(point, Weatherdata) for point in datalist])
-    if_error = all([isinstance(point, ConnError) for point in datalist])
-    if_badcode = all([isinstance(point, BadCode) for point in datalist])
+    weather = all([isinstance(point, Weatherdata) for point in datalist])
+    error = all([isinstance(point, ConnError) for point in datalist])
+    badcode = all([isinstance(point, ResponseResult) for point in datalist])
 
-    if if_weather:
+    if weather:
         return construct_weather_data(datalist)
-    elif if_error:
+    elif error:
         return show_error_message(datalist)
-    elif if_badcode:
+    elif badcode:
         return show_bad_code(datalist)
     
 # ----------------
 # Showing data from model to viewer
 # ----------------
 def weather(data: Weatherdata): 
-    """Reconstrucing data from Weatherdata dataclass into cplumn of texts inside flet widget"""
+    """Reconstrucing data from Weatherdata dataclass into column of texts inside flet widget"""
     return ft.Column(
         controls = [
             ft.Text(f'Tanggal: {data.date}', size = 24,style = 'titleMedium', weight = 'bold'),
@@ -115,13 +115,13 @@ def show_error_message(data: list[ConnError]):
         )
     )
 
-def show_bad_code(data: list[BadCode]):
+def show_bad_code(data: list[ResponseResult]):
     bad_code = data[0].code
     return ft.Container(
         content = ft.Column(
             controls = [
                 ft.Text(
-                    'Respons HTTP tidak baik',
+                    'Terdapat masalah dalam koneksi.',
                     size = 60,
                     weight = 'bold',
                     style = 'titleLarge'
