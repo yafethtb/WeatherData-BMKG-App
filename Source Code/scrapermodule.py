@@ -13,10 +13,6 @@ class ConnError:
     problem: str
 
 @dataclass
-class BadCode:
-    code: int
-
-@dataclass
 class Weatherdata:
     date: str
     hour: str
@@ -88,24 +84,6 @@ class BMKGScraper:
                         wind_speed = wind_strength
                     )
             else:
-                yield BadCode(status)
+                yield scraped_html
         elif isinstance(scraped_html, ConnError):
             yield scraped_html
-
-
-# from time import time
-
-# start = time()
-# id = "AreaID=5002274"
-# day_one = 'TabPaneCuaca3'
-
-# data = BMKGScraper(id, day_one)
-# datascraping = data.scraping
-
-# all_data = [scraped for scraped in datascraping]
-# check_weather_instance = all(isinstance(x, Weatherdata) for x in all_data)
-# print(check_weather_instance)
-
-# end = time() - start
-
-# print(end)
