@@ -1,6 +1,12 @@
 import flet as ft
 import presenter as pt
 
+# PRIMARY = ''
+# SECONDARY = ''
+# TERTIARY = ''
+# QUARTERNARY = ''
+TEXT = '#000000'
+
 def main(page: ft.Page):
     page.title = "BMKG WEATHER REPORT APP"
     page.window_width = 1200        
@@ -28,6 +34,7 @@ def main(page: ft.Page):
                         'Nama Kecamatan dan Hari harus terisi.', 
                         style = 'titleMedium',
                         weight = 'w700',
+                        color = TEXT,
                         size = 72
                     )  
             
@@ -60,13 +67,15 @@ def main(page: ft.Page):
                             autofocus = True,
                             text_size = 16, 
                             options = pt.populate_city(),
+                            color = TEXT
                             )
       
     day_list = ft.Dropdown(width = 150, 
                            label = "PILIH HARI",                        
                            text_size = 16, 
                            autofocus = True,
-                           options = pt.populate_days()
+                           options = pt.populate_days(),
+                           color = TEXT
                            )
 
     submitbtn = ft.ElevatedButton (
@@ -91,10 +100,11 @@ def main(page: ft.Page):
             'Data diambil dari situs BMKG (https://www.bmkg.go.id)', 
             style = 'titleMedium',
             weight = 'w700',
-            size = 36),
+            size = 36,
+            color = TEXT),
             height = 500,
             alignment = ft.alignment.center,            
-            padding = ft.padding.all(10)
+            padding = ft.padding.all(10)            
     )
 
     # ----------------
@@ -102,8 +112,8 @@ def main(page: ft.Page):
     # ----------------
     footer_block = ft.Row(
         controls = [
-            ft.Text('Created by Yafeth T. B (2023)', size = 14),
-            ft.Text('Data source: https://www.bmkg.go.id', size = 14)
+            ft.Text('Created by Yafeth T. B (2023)', size = 14, color = TEXT),
+            ft.Text('Data source: https://www.bmkg.go.id', size = 14, color = TEXT)
         ],
         alignment = 'center',
         vertical_alignment = 'center',
