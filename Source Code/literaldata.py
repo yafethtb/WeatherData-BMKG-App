@@ -1,3 +1,10 @@
+class ColorPalette:
+    PRIMARY = "#000814"
+    SECONDARY = "#001d3d"
+    TERTIARY = "#003566"
+    QUARTERNARY = "#ffc300"
+    TEXT = "#ffd60a"
+
 
 DAY_TAG = {
     'HARI INI': 'TabPaneCuaca1',

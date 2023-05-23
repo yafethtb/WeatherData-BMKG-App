@@ -1,11 +1,7 @@
 import flet as ft
 import presenter as pt
+from literaldata import ColorPalette as clpt
 
-# PRIMARY = ''
-# SECONDARY = ''
-# TERTIARY = ''
-# QUARTERNARY = ''
-TEXT = '#000000'
 
 def main(page: ft.Page):
     page.title = "BMKG WEATHER REPORT APP"
@@ -13,7 +9,7 @@ def main(page: ft.Page):
     page.window_height = 800       
     page.window_resizable = False  # Freeze the window size
     page.window_maximizable = False # Remove the maximizable button
-    page.bgcolor = '#F6FFDE' # ft.colors.LIME_50    
+    page.bgcolor = clpt.PRIMARY
     page.update()
 
     # ----------------
@@ -24,23 +20,41 @@ def main(page: ft.Page):
         day = day_list.value
 
         if all([district, day]):
-            result_block.content = pt.show_result(district, day)
+            result_part.content = pt.show_result(district, day)
+            result_header.value = f'PRAKIRAAN CUACA {district}'.upper()
             city_list.error_text = None
             day_list.error_text = None
+            user_query.visible = True
+            user_query.value = ''
+            city_list.visible = False
         else:
             city_list.error_text = 'Pilih sebelum mulai'
             day_list.error_text = 'Pilih sebelum mulai'
-            result_block.content = ft.Text(
+            result_part.content = ft.Text(
                         'Nama Kecamatan dan Hari harus terisi.', 
                         style = 'titleMedium',
                         weight = 'w700',
-                        color = TEXT,
                         size = 72
                     )  
+        
+        page.update()
             
-        city_list.update()
-        day_list.update()
-        result_block.update()
+
+    def stack_modif(e):
+        query = user_query.value.lower()
+        if query != '':
+            city_list.visible = True
+            user_query.visible = False
+            city_list.options = pt.populate_city(query)
+        else: 
+            city_list.visible = False
+
+        page.update()
+
+    def show_query(e):
+        user_query.visible = True
+        city_list.visible = False
+        page.update()        
 
     # ----------------
     # Header Part
@@ -48,63 +62,100 @@ def main(page: ft.Page):
     header_block = ft.Container(
         content = ft.Text(
         'PRAKIRAAN CUACA BMKG',
-        color = '#F6FFDE',
+        color = clpt.TEXT,
         size = 36,
         style = 'titleLarge',
         weight = 'w900'
         ), 
-        bgcolor = '#AAC8A7',
+        bgcolor = clpt.TERTIARY,
         height = 100,
         alignment = ft.alignment.center,            
-        padding = ft.padding.all(10)
+        padding = ft.padding.all(10),
+        border_radius= ft.border_radius.only(top_left = 20, top_right = 20)
     )
     # ----------------
     # Control part
     # ----------------
     city_list = ft.Dropdown(width = 550, 
-                            label = "PILIH KECAMATAN",
-                            # helper_text = 'Jakarta Pusat - Kota Jakarta Pusat', 
                             autofocus = True,
                             text_size = 16, 
-                            options = pt.populate_city(),
-                            color = TEXT
+                            options = [],
+                            visible = False,
+                            on_change = show_query,
+                            helper_text = 'Pilih salah satu dari nama kecamatan berikut', 
+                            border_color = clpt.QUARTERNARY,
+                            color = clpt.QUARTERNARY  
                             )
+    
+    user_query = ft.TextField(
+        width = 550,
+        label = "PILIH KECAMATAN",
+        on_submit = stack_modif,        
+        border_color = clpt.QUARTERNARY,
+        color = clpt.QUARTERNARY                   
+    )
+
+    stack_list = ft.Stack(
+        controls = [city_list, user_query],
+        width = 550        
+    )
       
     day_list = ft.Dropdown(width = 150, 
-                           label = "PILIH HARI",                        
+                           label = "PILIH HARI",         
+                           label_style = ft.TextStyle(color = clpt.TERTIARY),               
                            text_size = 16, 
                            autofocus = True,
                            options = pt.populate_days(),
-                           color = TEXT
+                           border_color = clpt.QUARTERNARY,
+                           color = clpt.QUARTERNARY                                     
                            )
 
     submitbtn = ft.ElevatedButton (
         text = "TAMPILKAN CUACA",
-        bgcolor = '#AAC8A7',
-        color = '#F6FFDE',        
+        bgcolor = clpt.TERTIARY,
+        color = clpt.TEXT,        
         width = 200,
         height = 50,
         on_click = result,    
     )
 
     control_block = ft.Row(
-        controls = [city_list, day_list, submitbtn],
+        controls = [stack_list, day_list, submitbtn],
         alignment = 'spaceAround'
     )
     
     # ----------------
     # Result Part
     # ----------------
-    result_block = ft.Container(
+    result_header = ft.Text(
+        size = 24,
+        style = 'titleMedium',
+        weight = 'w600',
+        color = clpt.TEXT,
+        text_align = ft.TextAlign.CENTER        
+    )
+
+    result_part = ft.Container(
         content = ft.Text(
             'Data diambil dari situs BMKG (https://www.bmkg.go.id)', 
             style = 'titleMedium',
             weight = 'w700',
             size = 36,
-            color = TEXT),
-            height = 500,
+            color = clpt.TEXT
+            ),
+            height = 450,
             alignment = ft.alignment.center,            
-            padding = ft.padding.all(10)            
+            padding = ft.padding.all(5),
+    )
+
+    result_block = ft.Column(
+        controls=[
+            result_header,
+            result_part
+        ],
+        alignment = 'spaceAround',
+        horizontal_alignment = 'stretch',
+        spacing = 15
     )
 
     # ----------------
@@ -112,8 +163,8 @@ def main(page: ft.Page):
     # ----------------
     footer_block = ft.Row(
         controls = [
-            ft.Text('Created by Yafeth T. B (2023)', size = 14, color = TEXT),
-            ft.Text('Data source: https://www.bmkg.go.id', size = 14, color = TEXT)
+            ft.Text('Created by Yafeth T. B (2023)', size = 14, color = clpt.TEXT),
+            ft.Text('Data source: https://www.bmkg.go.id', size = 14, color = clpt.TEXT)
         ],
         alignment = 'center',
         vertical_alignment = 'center',
@@ -124,4 +175,3 @@ def main(page: ft.Page):
 
 
 ft.app(target=main, assets_dir = 'assets')
-
