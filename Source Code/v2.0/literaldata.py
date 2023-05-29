@@ -7066,3 +7066,17 @@ CITY_PARAM = {
     "Padang Hilir - Kota Tebing Tinggi": "AreaID=5012153",
     "Tbg Tinggi Kota - Kota Tebing Tinggi": "AreaID=5012155"
 }
+
+
+images = {
+    'dawn-bg': 'assets/photos/dawn-bg.jpg',
+    'dawn-fg': 'assets/photos/dawn-fg.jpg',
+    'morning-bg': 'assets/photos/morning-bg.jpg',
+    'morning-fg': 'assets/photos/morning-fg.jpg',
+    'noon-bg': 'assets/photos/noon-bg.jpg',
+    'noon-fg': 'assets/photos/noon-fg.jpg',
+    'dusk-bg': 'assets/photos/dusk-bg.jpg',
+    'dusk-fg': 'assets/photos/dusk-fg.jpg',
+    'night-bg': 'assets/photos/night-bg.jpg',
+    'night-fg': 'assets/photos/noon-fg.jpg'    
+}

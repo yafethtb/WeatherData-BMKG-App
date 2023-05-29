@@ -10,11 +10,10 @@ locale.setlocale(locale.LC_ALL, 'ID')
 def main(page: ft.Page):
     # Page initialization
     page.title = 'WeatherData BMKG 2.0'
-    page.window_max_height = 850
-    page.window_max_width = 1200
-    page.window_min_height = 850
-    page.window_min_width = 1200
+    page.window_width = 1200
+    page.window_height = 850
     page.window_maximizable = False
+    page.window_resizable = False
     page.fonts = {
         'josefin_sans': '/fonts/JosefinSans-Regular.ttf',
         'playfair': '/fonts/Playfair_144pt-Regular.ttf',
@@ -23,6 +22,8 @@ def main(page: ft.Page):
     page.update()
 
     # functions
+    time_ui = periodic_ui()
+
     def showtime():
         while True:
             clock.value = dt.now().strftime("%H:%M:%S")
@@ -39,7 +40,13 @@ def main(page: ft.Page):
         search_container.update()
 
     def animate(e):
-        ...
+        animated_layer.content = result_container
+        result_container.content = ft.Text(value = search_option.value)
+        page.update()
+
+    def animate_rewind(e):
+        animated_layer.content = search_container
+        page.update()
 
 
     # Search layer widgets
@@ -49,12 +56,12 @@ def main(page: ft.Page):
             color = 'black',
             weight = 'w600'
         ),
-        on_change = show_dropdown
+        on_change = show_dropdown,
     )
 
     search_option = ft.Dropdown(
         options = [],
-        visible= False
+        visible= False,
         )
     
     search_button = ft.IconButton(
@@ -64,79 +71,112 @@ def main(page: ft.Page):
         on_click = animate,
     )
 
+    queries = ft.Column(
+        controls = [
+            search_query,
+            search_option,
+            search_button
+        ],
+        alignment = 'start',
+        horizontal_alignment = 'center',
+        spacing = 15,
+        expand = 4
+    )
+
     search_container = ft.Container(
         content =  ft.Column(
         controls = [
             ft.Container(
                 content = ft.Column(
                     controls = [
+                        ft.Image(
+                            src = 'assets\WeatherDataLogo.png',
+                            color = time_ui.main_text_color,
+                            scale = 1.5
+                        ),
                         ft.Text(
-                            value = "WEATHERDATA BMKG",
+                            value = time_ui.message,
                             font_family = 'josefin_sans',
-                            size = 48,
-                            text_align = 'center',
-                            weight = 'w800'
-                        ),
-                        ft.Row(
-                            controls = [
-                                date := ft.Text(
-                                    value = dt.now().strftime("%a, %d %b %Y"),
-                                    size = 24,
-                                    font_family = 'josefin_sans',
-                                    weight = 'w600'
-                                ),
-                                clock := ft.Text(
-                                    size = 24,
-                                    font_family = 'josefin_sans',
-                                    weight = 'w600'
-                                )
-                            ],
-                            alignment = 'center',
-                            vertical_alignment = 'center',
-                            spacing = 30
-                        ),
-                        
+                            size = 24,
+                            text_align = 'justify',
+                            weight = 'w500',
+                            color = time_ui.main_text_color,
+                            bgcolor = ft.colors.BLUE_GREY_200,
+                            opacity = 0.8
+                        )                        
                     ],
-                    alignment = 'center',
-                    horizontal_alignment = 'center',                    
+                    alignment = 'start',
+                    horizontal_alignment = 'center',
+                    spacing = 20           
                 ),
-                margin = ft.margin.all(30)
+                padding = ft.padding.all(20),
+                expand = 3
             ),
             ft.Text(
-                "Masukkan nama kecamatan di sini",
-                font_family = 'playfair',
-                size = 24,
-                weight = 'bold',
+                "Untuk melihat prakiraan cuaca, \nmasukkan nama kecamatan di sini:",
+                size = 20,
+                weight = 'w600',
                 text_align = ft.TextAlign.CENTER,
-                color = ft.colors.BLUE_GREY_900
+                color = time_ui.secondary_text_color,
+                expand = 1
                 ),
-            search_query,
-            search_option,
-            search_button
+            queries,           
+            ft.Row(
+                controls = [
+                    date := ft.Text(
+                        value = dt.now().strftime("%a, %d %b %Y"),
+                        size = 18,
+                        font_family = 'josefin_sans',
+                        weight = 'w500'
+                    ),
+                    clock := ft.Text(
+                        size = 18,
+                        font_family = 'josefin_sans',
+                        weight = 'w500'
+                    )
+                ],
+                alignment = 'spaceAround',
+                vertical_alignment = 'center',
+                spacing = 30,
+                expand = 1
+            ),
         ],
         alignment = 'center_top',
         horizontal_alignment = 'stretch'        
         ),
         border_radius = 10,
-        padding = ft.padding.symmetric(horizontal = 150, vertical = 50),
+        padding = ft.padding.symmetric(horizontal = 150, vertical = 25),
         bgcolor = ft.colors.BLUE_GREY_50,
-        opacity = 0.5
+        opacity = 0.8,
     )
     
     # Result layer widgets
-    result_container = ft.Container()
+    result_container = ft.Container(
+        content = ft.Text(value = "Testing"),
+        border_radius = 20,
+        bgcolor = ft.colors.AMBER_100,
+        padding = ft.padding.all(100),
+        on_click = animate_rewind
+    )
 
 
     # Lower layer widgets    
-    animated_layer = ft.AnimatedSwitcher(
+    # animated_layer = ft.AnimatedSwitcher(
+    #     content = search_container,
+    #     transition =  'fade',
+    #     duration = 500,
+    #     switch_in_curve=ft.AnimationCurve.LINEAR,
+    #     switch_out_curve=ft.AnimationCurve.LINEAR,
+    # )
+
+    animated_layer = ft.Container(
         content = search_container,
-        transition =  'fade',
-        duration = 3000
+        expand = True
     )
 
     foundation = ft.Container(
         content= animated_layer,
-        image_src = 'assets/photos/mohammad-alizade-62t_kKa2YlA-unsplash.jpg',
+        image_src = time_ui.fg_image,
         image_fit = ft.ImageFit.COVER,
         image_opacity = 0.8,
         border_radius = 10,
@@ -147,14 +187,14 @@ def main(page: ft.Page):
             blur_style = ft.ShadowBlurStyle.NORMAL,            
             offset = ft.Offset(0, 0),
             color = '#222222'
-        )
+        )        
     )   
 
     base_page = ft.Container(
         content = foundation,
         height = 850,
-        width = 1200,
-        image_src = 'assets/photos/lukasz-lada-q7z-AUlHPaw-unsplash.png',        
+        width = 1200,      
+        image_src = time_ui.bg_image,        
         image_fit = ft.ImageFit.COVER,
         image_opacity = 0.8,
         alignment = ft.alignment.center,
