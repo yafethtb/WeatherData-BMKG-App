@@ -8,7 +8,9 @@ locale.setlocale(locale.LC_ALL, 'ID')
 
 
 def main(page: ft.Page):
+    #------------
     # Page initialization
+    #------------
     page.title = 'WeatherData BMKG 2.0'
     page.window_width = 1200
     page.window_height = 850
@@ -20,8 +22,9 @@ def main(page: ft.Page):
         'work_sans': '/fonts/WorkSans-Regular.ttf',
     }
     page.update()
-
+    #------------
     # functions
+    #------------
     time_ui = periodic_ui()
 
     def showtime():
@@ -39,17 +42,25 @@ def main(page: ft.Page):
         
         search_container.update()
 
-    def animate(e):
-        animated_layer.content = result_container
-        result_container.content = ft.Text(value = search_option.value)
+    def open_result(e):
+        query_value = search_query.value
+        option_value = search_option.value
+
+        if all([query_value, option_value]):
+            result_layer.content = result_container
+            result_container.content = ft.Text(value = search_option.value)
+        else:
+            search_query.error_text = "Mohon mengisi kolom ini"
+            search_option.error_text = "Mohon memilih salah satu pilihan"
+        
         page.update()
 
-    def animate_rewind(e):
-        animated_layer.content = search_container
+    def open_search(e):
+        result_layer.content = search_container
         page.update()
-
-
+    #------------
     # Search layer widgets
+    #------------
     search_query = ft.TextField(
         text_style = ft.TextStyle(
             font_family = 'work_sans',
@@ -68,7 +79,7 @@ def main(page: ft.Page):
         icon = ft.icons.MANAGE_SEARCH_OUTLINED,
         icon_size = 40,
         icon_color = ft.colors.BLUE_GREY_900,
-        on_click = animate,
+        on_click = open_result,
     )
 
     queries = ft.Column(
@@ -85,97 +96,88 @@ def main(page: ft.Page):
 
     search_container = ft.Container(
         content =  ft.Column(
-        controls = [
-            ft.Container(
-                content = ft.Column(
-                    controls = [
-                        ft.Image(
-                            src = 'assets\WeatherDataLogo.png',
-                            color = time_ui.main_text_color,
-                            scale = 1.5
-                        ),
-                        ft.Text(
-                            value = time_ui.message,
-                            font_family = 'josefin_sans',
-                            size = 24,
-                            text_align = 'justify',
-                            weight = 'w500',
-                            color = time_ui.main_text_color,
-                            bgcolor = ft.colors.BLUE_GREY_200,
-                            opacity = 0.8
-                        )                        
-                    ],
-                    alignment = 'start',
-                    horizontal_alignment = 'center',
-                    spacing = 20           
-                ),
-                padding = ft.padding.all(20),
-                expand = 3
-            ),
-            ft.Text(
-                "Untuk melihat prakiraan cuaca, \nmasukkan nama kecamatan di sini:",
-                size = 20,
-                weight = 'w600',
-                text_align = ft.TextAlign.CENTER,
-                color = time_ui.secondary_text_color,
-                expand = 1
-                ),
-            queries,           
-            ft.Row(
-                controls = [
-                    date := ft.Text(
-                        value = dt.now().strftime("%a, %d %b %Y"),
-                        size = 18,
-                        font_family = 'josefin_sans',
-                        weight = 'w500'
+            controls = [
+                ft.Container(
+                    content = ft.Column(
+                        controls = [
+                            ft.Image(
+                                src = 'assets\WeatherDataLogo.png',
+                                color = time_ui.main_text_color,
+                                scale = 1.5
+                            ),
+                            ft.Text(
+                                value = time_ui.message,
+                                font_family = 'josefin_sans',
+                                size = 24,
+                                text_align = 'justify',
+                                weight = 'w500',
+                                color = time_ui.main_text_color,
+                                bgcolor = ft.colors.BLUE_GREY_200,
+                                opacity = 0.8
+                            )                        
+                        ],
+                        alignment = 'start',
+                        horizontal_alignment = 'center',
+                        spacing = 20           
                     ),
-                    clock := ft.Text(
-                        size = 18,
-                        font_family = 'josefin_sans',
-                        weight = 'w500'
-                    )
-                ],
-                alignment = 'spaceAround',
-                vertical_alignment = 'center',
-                spacing = 30,
-                expand = 1
-            ),
-        ],
-        alignment = 'center_top',
-        horizontal_alignment = 'stretch'        
+                    padding = ft.padding.all(20),
+                    expand = 3
+                ),
+                ft.Text(
+                    "Untuk melihat prakiraan cuaca, \nmasukkan nama kecamatan di sini:",
+                    size = 20,
+                    weight = 'w600',
+                    text_align = ft.TextAlign.CENTER,
+                    color = time_ui.secondary_text_color,
+                    expand = 1
+                    ),
+                queries,           
+                ft.Row(
+                    controls = [
+                        date := ft.Text(
+                            value = dt.now().strftime("%a, %d %b %Y"),
+                            size = 18,
+                            font_family = 'josefin_sans',
+                            weight = 'w500'
+                        ),
+                        clock := ft.Text(
+                            size = 18,
+                            font_family = 'josefin_sans',
+                            weight = 'w500'
+                        )
+                    ],
+                    alignment = 'spaceAround',
+                    vertical_alignment = 'center',
+                    spacing = 30,
+                    expand = 1
+                ),
+            ],
+            alignment = 'center_top',
+            horizontal_alignment = 'stretch'        
         ),
         border_radius = 10,
         padding = ft.padding.symmetric(horizontal = 150, vertical = 25),
         bgcolor = ft.colors.BLUE_GREY_50,
         opacity = 0.8,
     )
-    
+    #------------
     # Result layer widgets
+    #------------
     result_container = ft.Container(
         content = ft.Text(value = "Testing"),
         border_radius = 20,
         bgcolor = ft.colors.AMBER_100,
         padding = ft.padding.all(100),
-        on_click = animate_rewind
+        on_click = open_search
     )
 
-
-    # Lower layer widgets    
-    # animated_layer = ft.AnimatedSwitcher(
-    #     content = search_container,
-    #     transition =  'fade',
-    #     duration = 500,
-    #     switch_in_curve=ft.AnimationCurve.LINEAR,
-    #     switch_out_curve=ft.AnimationCurve.LINEAR,
-    # )
-
-    animated_layer = ft.Container(
+    result_layer = ft.Container(
         content = search_container,
         expand = True
     )
 
-    foundation = ft.Container(
-        content= animated_layer,
+    front_page = ft.Container(
+        content= result_layer,
         image_src = time_ui.fg_image,
         image_fit = ft.ImageFit.COVER,
         image_opacity = 0.8,
@@ -189,9 +191,11 @@ def main(page: ft.Page):
             color = '#222222'
         )        
     )   
-
+    #------------
+    # Assembling
+    #------------
     base_page = ft.Container(
-        content = foundation,
+        content = front_page,
         height = 850,
         width = 1200,      
         image_src = time_ui.bg_image,        
@@ -205,5 +209,5 @@ def main(page: ft.Page):
 
     showtime()
 
-
-ft.app(target = main, assets_dir= 'assets')
+if __name__  == "__main__":
+    ft.app(target = main, assets_dir= 'assets')
