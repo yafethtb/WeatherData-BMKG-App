@@ -7078,5 +7078,19 @@ images = {
     'dusk-bg': 'assets/photos/dusk-bg.jpg',
     'dusk-fg': 'assets/photos/dusk-fg.jpg',
     'night-bg': 'assets/photos/night-bg.jpg',
-    'night-fg': 'assets/photos/noon-fg.jpg'    
+    'night-fg': 'assets/photos/night-fg.jpg'    
+}
+
+weather_icons = {
+    'Cerah': 'assets/weather-icons/sunny-svgrepo-com.svg',
+    'Cerah Berawan': 'assets/weather-icons/partly-cloudy-svgrepo-com.svg',
+    'Berawan': 'assets/weather-icons/mostly-cloudy-svgrepo-com.svg',
+    'Berawan Tebal': 'assets/weather-icons/cloudy-svgrepo-com.svg',
+    'Udara Kabur': 'assets/weather-icons/haze-svgrepo-com.svg',
+    'Asap': 'assets/weather-icons/smoke-svgrepo-com.svg',
+    'Kabut': 'assets/weather-icons/fog-svgrepo-com.svg',
+    'Hujan Ringan': 'assets/weather-icons/rain-drizzle-svgrepo-com.svg',
+    'Hujan Sedang': 'assets/weather-icons/rain-svgrepo-com.svg',
+    'Hujan Lebat': 'assets/weather-icons/rain-heavy-svgrepo-com.svg',
+    'Hujan Lokal': 'assets/weather-icons/rain-scattered-svgrepo-com.svg'
 }

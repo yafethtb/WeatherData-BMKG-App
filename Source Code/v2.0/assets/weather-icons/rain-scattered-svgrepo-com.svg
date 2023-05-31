@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="rain-scattered-svgrepo-com.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview24"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89875"
+     inkscape:cx="400"
+     inkscape:cy="399.44367"
+     inkscape:window-width="2240"
+     inkscape:window-height="1306"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;}</style>
+  </defs>
+  <title
+     id="title6">rain--scattered</title>
+  <path
+     id="path8"
+     style="stroke-width:25"
+     d="M 500 0 L 500 75 L 550 75 L 550 0 L 500 0 z M 714.64258 75.009766 L 661.60742 128.04688 L 696.96484 163.40625 L 750.00195 110.36914 L 714.64258 75.009766 z M 335.35352 75.011719 L 299.99609 110.37109 L 353.03125 163.40625 L 388.39062 128.04883 L 335.35352 75.011719 z M 526.18164 125 A 149.8875 149.8875 0 0 0 390.83789 208.27734 A 183.735 183.735 0 0 0 337.5 200 A 188.7725 188.7725 0 0 0 158.76953 331.10156 A 149.815 149.815 0 0 0 200 625 L 384.54492 625 L 352.65039 688.81836 A 25 25 0 1 0 397.36328 711.18164 L 440.44336 625 L 475 625 A 149.6325 149.6325 0 0 0 605.4082 401.3418 A 149.8525 149.8525 0 0 0 675 275 A 149.8875 149.8875 0 0 0 526.18164 125 z M 522.37891 175.16602 A 99.6725 99.6725 0 0 1 573.16992 362.23242 A 149 149 0 0 0 516.23047 331.10156 A 187.8925 187.8925 0 0 0 436.59766 229.38281 A 99.6725 99.6725 0 0 1 522.37891 175.16602 z M 725 250 L 725 300 L 800 300 L 800 250 L 725 250 z M 334.46875 250.0332 A 137.4 137.4 0 0 1 471.63086 357.54492 L 475.27539 373.94922 L 491.83984 376.76953 A 99.8125 99.8125 0 0 1 475 575 L 200 575 A 99.8125 99.8125 0 0 1 183.17188 376.76953 L 199.75 373.94922 L 203.39453 357.54492 A 137.4 137.4 0 0 1 334.46875 250.0332 z M 696.96289 386.62891 L 661.61719 421.98633 L 714.6543 475.00781 L 750 439.65039 L 696.96289 386.62891 z M 249.57422 675.14844 A 25.0625 25.0625 0 0 0 227.61719 688.80664 L 190.2832 763.82031 A 24.965 24.965 0 0 0 201.49805 797.36523 A 25.3175 25.3175 0 0 0 212.71094 800 A 25.0325 25.0325 0 0 0 235.14062 786.16992 L 272.47461 711.16992 A 25.0625 25.0625 0 0 0 249.57422 675.14844 z "
+     transform="scale(0.04)" />
+</svg>

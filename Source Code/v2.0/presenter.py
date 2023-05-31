@@ -78,25 +78,11 @@ def populate_days():
 
 # ----------------
 # Data responding from model
-# ----------------
-# def show_result(city, tag):
-#     """Show results of what user choose to see"""
-#     id = city_dict[city]
-#     daytag = day_tag[tag]
-#     data = BMKGScraper(id, daytag).scraping
-    
-#     datalist = [datum for datum in data]
-#     weather = all([isinstance(point, Weatherdata) for point in datalist])
-#     error = all([isinstance(point, ConnError) for point in datalist])
-#     badcode = all([isinstance(point, ResponseResult) for point in datalist])
+# ----------------    
+def connection(param: str) -> BMKGScraper:
+    return BMKGScraper(param)
 
-#     if weather:
-#         return construct_weather_data(datalist)
-#     elif error:
-#         return show_error_message(datalist)
-#     elif badcode:
-#         return show_bad_code(datalist)
-    
+
 # ----------------
 # Showing data from model to viewer
 # ----------------

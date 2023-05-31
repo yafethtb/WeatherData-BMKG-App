@@ -24,7 +24,7 @@ class Weatherdata:
 
 class BMKGScraper:
     """"Scraping data from BMKG website"""
-    def __init__(self, params, tag) -> None:
+    def __init__(self, params) -> None:
         self.header = {
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0',
 			'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -38,7 +38,6 @@ class BMKGScraper:
 			'Sec-Fetch-User': '?1',
 		}        
         self.params = params
-        self.tag = tag
         self.URL = 'https://www.bmkg.go.id/cuaca/prakiraan-cuaca.bmkg' 
         self.session = requests.Session()
     
@@ -52,8 +51,7 @@ class BMKGScraper:
         except requests.exceptions.ConnectionError as e:
             return ConnError(e, 'Connection Error')
 
-    @property
-    def scraping(self):
+    def scraping(self, tag):
         """Scrape data from BMKG website."""
         scraped_html = self.connection
 
@@ -63,8 +61,8 @@ class BMKGScraper:
             if status == 200:
                 content = response.content
                 soup = bs(content, 'html.parser')
-                date = soup.find('a', attrs = {'href': f'#{self.tag}'}).get_text()  
-                raw_data = soup.find('div', attrs = {'id': self.tag})
+                date = soup.find('a', attrs = {'href': f'#{tag}'}).get_text()  
+                raw_data = soup.find('div', attrs = {'id': tag})
                 all_weather = raw_data.find_all('div', attrs = {'class': 'cuaca-flex-child'})
 
                 for weather in all_weather:
@@ -87,3 +85,5 @@ class BMKGScraper:
                 yield scraped_html
         elif isinstance(scraped_html, ConnError):
             yield scraped_html
+
+

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="rain-heavy-svgrepo-com.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89875"
+     inkscape:cx="400"
+     inkscape:cy="399.44367"
+     inkscape:window-width="2240"
+     inkscape:window-height="1306"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;}</style>
+  </defs>
+  <title
+     id="title6">rain--heavy</title>
+  <path
+     id="path8"
+     style="stroke-width:25"
+     d="M 400.01172 49.998047 A 224.8575 224.8575 0 0 0 180.00586 228.4043 A 162.2625 162.2625 0 0 0 142.56445 533.96094 L 102.65039 613.81836 A 25 25 0 1 0 147.36328 636.18164 L 190.43555 550 L 359.54492 550 L 327.65039 613.81836 A 25 25 0 1 0 372.36328 636.18164 L 415.44336 550 L 584.54492 550 L 552.65039 613.81836 A 25 25 0 1 0 597.36328 636.18164 L 645.97266 538.93164 A 162.645 162.645 0 0 0 750 387.5 A 163.3075 163.3075 0 0 0 620.01953 228.4043 A 224.8575 224.8575 0 0 0 400.01172 49.998047 z M 396.44531 100.0293 A 174.845 174.845 0 0 1 573.56055 253.57812 L 576.02539 273.87695 L 596.41016 275.47461 A 112.4375 112.4375 0 0 1 587.5 500 L 212.5 500 A 112.4375 112.4375 0 0 1 203.59961 275.47461 L 223.98828 273.87695 L 226.46484 253.57812 A 174.845 174.845 0 0 1 396.44531 100.0293 z M 249.69531 599.98633 A 25.000917 25.000917 0 0 0 227.64062 613.80273 L 177.64062 713.81445 A 25 25 0 0 0 200 750 A 24.9525 24.9525 0 0 0 222.35938 736.16992 L 272.35938 636.16992 A 25.000917 25.000917 0 0 0 249.69531 599.98633 z M 474.69531 599.98633 A 25.000917 25.000917 0 0 0 452.64062 613.80273 L 402.64062 713.81445 A 25 25 0 0 0 425 750 A 24.9525 24.9525 0 0 0 447.35938 736.16992 L 497.35938 636.16992 A 25.000917 25.000917 0 0 0 474.69531 599.98633 z "
+     transform="scale(0.04)" />
+</svg>

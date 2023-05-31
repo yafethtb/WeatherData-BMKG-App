@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="haze-svgrepo-com.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview26"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89875"
+     inkscape:cx="272.60083"
+     inkscape:cy="416.13352"
+     inkscape:window-width="2240"
+     inkscape:window-height="1306"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;}</style>
+  </defs>
+  <title
+     id="title6">haze</title>
+  <path
+     id="path8"
+     style="stroke-width:25"
+     d="M 425 50 L 425 150 L 475 150 L 475 50 L 425 50 z M 219.82227 134.4668 L 184.4668 169.82227 L 255.17773 240.5332 L 290.5332 205.17773 L 219.82227 134.4668 z M 680.17773 134.4668 L 609.4668 205.17773 L 644.82227 240.5332 L 715.5332 169.82227 L 680.17773 134.4668 z M 450 200 A 200.23 200.23 0 0 0 250 400 L 300 400 A 150 150 0 1 1 450 550 L 175 550 A 25 25 0 0 0 175 600 L 450 600 A 200 200 0 0 0 450 200 z M 700 375 L 700 425 L 800 425 L 800 375 L 700 375 z M 75 450 A 25 25 0 0 0 75 500 L 375 500 A 25 25 0 0 0 375 450 L 75 450 z M 644.82227 559.46875 L 609.4668 594.82422 L 680.17773 665.5332 L 715.5332 630.17969 L 644.82227 559.46875 z M 75 650 A 25 25 0 0 0 75 700 L 475 700 A 25 25 0 0 0 475 650 L 75 650 z "
+     transform="scale(0.04)" />
+</svg>

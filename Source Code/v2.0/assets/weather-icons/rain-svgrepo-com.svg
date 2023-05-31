@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="rain-svgrepo-com.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89875"
+     inkscape:cx="400"
+     inkscape:cy="399.44367"
+     inkscape:window-width="2240"
+     inkscape:window-height="1306"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;}</style>
+  </defs>
+  <title
+     id="title6">cloud--rain</title>
+  <path
+     id="path8"
+     style="stroke-width:25"
+     d="M 400 50.669922 A 225 225 0 0 0 180 228.5 A 162.5 162.5 0 0 0 212.5 550 L 587.5 550 A 162.5 162.5 0 0 0 620 228.5 A 225 225 0 0 0 400 50.669922 z M 400 100 A 175 175 0 0 1 572.5 254.5 L 575 275 L 596.5 275 A 112.58996 112.58996 0 0 1 587.5 500 L 212.5 500 A 112.58996 112.58996 0 0 1 203.5 275 L 225 275 L 226.5 253.5 A 175 175 0 0 1 400 100 z M 251.43945 598.36719 A 25 25 0 0 0 227.75 613.75 L 177.75 713.75 A 25 25 0 0 0 188.75 747.25 A 23.25 23.25 0 0 0 200 750 A 25 25 0 0 0 222.25 736.25 L 272.25 636.25 A 25 25 0 0 0 251.43945 598.36719 z M 401.43945 598.36719 A 25 25 0 0 0 377.75 613.75 L 327.75 713.75 A 25 25 0 0 0 338.75 747.25 A 23.25 23.25 0 0 0 350 750 A 25 25 0 0 0 372.25 736.25 L 422.25 636.25 A 25 25 0 0 0 401.43945 598.36719 z M 551.43945 598.36719 A 25 25 0 0 0 527.75 613.75 L 477.75 713.75 A 25 25 0 0 0 488.75 747.25 A 23.25 23.25 0 0 0 500 750 A 25 25 0 0 0 522.25 736.25 L 572.25 636.25 A 25 25 0 0 0 551.43945 598.36719 z "
+     transform="scale(0.04)" />
+</svg>
