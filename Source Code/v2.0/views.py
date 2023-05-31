@@ -44,16 +44,12 @@ def main(page: ft.Page):
 
     def open_result(e):
         query_value = search_query.value
-        option_value = search_option.value
-        connect_bmkg = connection(option_value)
+        option_value = search_option.value        
 
         if all([query_value, option_value]):
             front_layer.content = result_container
-            # result_container.content = ft.Text(value = search_option.value)
-            if isinstance(connect_bmkg, Weatherdata):
-                ...
-            else:
-                ...
+            result_container.content = ft.Text(value = search_option.value)
+           
         else:
             search_query.error_text = "Mohon mengisi kolom ini"
             search_option.error_text = "Mohon memilih salah satu pilihan"
@@ -107,7 +103,7 @@ def main(page: ft.Page):
                         controls = [
                             ft.Image(
                                 src = 'assets\WeatherDataLogo.png',
-                                color = time_ui.main_text_color,
+                                color = time_ui.color.main_text_color,
                                 scale = 1.5
                             ),
                             ft.Text(
@@ -116,7 +112,7 @@ def main(page: ft.Page):
                                 size = 24,
                                 text_align = 'justify',
                                 weight = 'w500',
-                                color = time_ui.main_text_color,
+                                color = time_ui.color.main_text_color,
                                 bgcolor = ft.colors.BLUE_GREY_200,
                                 opacity = 0.8
                             )                        
@@ -133,7 +129,7 @@ def main(page: ft.Page):
                     size = 20,
                     weight = 'w600',
                     text_align = ft.TextAlign.CENTER,
-                    color = time_ui.secondary_text_color,
+                    color = time_ui.color.secondary_text_color,
                     expand = 1
                     ),
                 queries,           
@@ -168,7 +164,6 @@ def main(page: ft.Page):
     #------------
     # Result layer widgets
     #------------
-    # result_rows = ft.Row()
     top_info = ft.Container(
         expand = 7
     )

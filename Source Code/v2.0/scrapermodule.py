@@ -2,10 +2,9 @@ from dataclasses import dataclass
 import requests
 from bs4 import BeautifulSoup as bs
 
-@dataclass
-class ResponseResult:
-    response: requests.Response
-    status_code: int
+# @dataclass
+# class ResponseResult:
+#     response: requests.Response
 
 @dataclass
 class ConnError:
@@ -14,12 +13,10 @@ class ConnError:
 
 @dataclass
 class Weatherdata:
-    date: str
     hour: str
     temperature: str
     weather: str
     humidity: str
-    wind_speed: str
 
 
 class BMKGScraper:
@@ -46,44 +43,37 @@ class BMKGScraper:
         """Connect to BMKG website"""    
         try:
             response =  self.session.get(self.URL, params = self.params, headers = self.header)    
-            code = response.status_code
-            return ResponseResult(response, code)             
+            response.raise_for_status()
         except requests.exceptions.ConnectionError as e:
             return ConnError(e, 'Connection Error')
+        except requests.exceptions.HTTPError as errhttp:
+            return ConnError(errhttp, 'Bad HTTP response')
+        finally:
+            return response       
+
 
     def scraping(self, tag):
         """Scrape data from BMKG website."""
         scraped_html = self.connection
+        if isinstance(scraped_html, requests.Response):
+            content = scraped_html.content
+            soup = bs(content, 'html.parser')
+            raw_data = soup.find('div', attrs = {'id': tag})
+            all_weather = raw_data.find_all('div', attrs = {'class': 'cuaca-flex-child'})
 
-        if isinstance(scraped_html, ResponseResult):
-            response = scraped_html.response
-            status = scraped_html.status_code
-            if status == 200:
-                content = response.content
-                soup = bs(content, 'html.parser')
-                date = soup.find('a', attrs = {'href': f'#{tag}'}).get_text()  
-                raw_data = soup.find('div', attrs = {'id': tag})
-                all_weather = raw_data.find_all('div', attrs = {'class': 'cuaca-flex-child'})
-
-                for weather in all_weather:
-                    hours_temp = weather.find_all('h2')
-                    hours = (hours_temp[0].text).replace('\xa0', ' ')
-                    temp = hours_temp[1].text
-                    all_p = weather.find_all('p')
-                    clouds = all_p[0].text
-                    humid = all_p[1].text
-                    wind_strength = (all_p[2].get_text(strip=True, separator=' ')).replace('\xa0', ' ')
-                    yield Weatherdata(
-                        date = date,
-                        hour = hours,
-                        temperature = temp,
-                        weather = clouds,
-                        humidity = humid,
-                        wind_speed = wind_strength
-                    )
-            else:
-                yield scraped_html
-        elif isinstance(scraped_html, ConnError):
-            yield scraped_html
+            for weather in all_weather:
+                hours_temp = weather.find_all('h2')
+                hours = (hours_temp[0].text).replace('\xa0', ' ')
+                temp = hours_temp[1].text
+                all_p = weather.find_all('p')
+                clouds = all_p[0].text
+                humid = all_p[1].text
+                
+                yield Weatherdata(                    
+                    hour = hours,
+                    temperature = temp,
+                    weather = clouds,
+                    humidity = humid,
+                )
 
 
