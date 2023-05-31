@@ -45,10 +45,15 @@ def main(page: ft.Page):
     def open_result(e):
         query_value = search_query.value
         option_value = search_option.value
+        connect_bmkg = connection(option_value)
 
         if all([query_value, option_value]):
-            result_layer.content = result_container
-            result_container.content = ft.Text(value = search_option.value)
+            front_layer.content = result_container
+            # result_container.content = ft.Text(value = search_option.value)
+            if isinstance(connect_bmkg, Weatherdata):
+                ...
+            else:
+                ...
         else:
             search_query.error_text = "Mohon mengisi kolom ini"
             search_option.error_text = "Mohon memilih salah satu pilihan"
@@ -56,7 +61,7 @@ def main(page: ft.Page):
         page.update()
 
     def open_search(e):
-        result_layer.content = search_container
+        front_layer.content = search_container
         page.update()
     #------------
     # Search layer widgets
@@ -163,21 +168,51 @@ def main(page: ft.Page):
     #------------
     # Result layer widgets
     #------------
+    # result_rows = ft.Row()
+    top_info = ft.Container(
+        expand = 7
+    )
+
+    bottom_info = ft.Tabs(
+        expand = 3,
+        selected_index = 1,
+        tabs = [
+            ft.Tab(
+                text = "Hari ini",
+                content = ft.Column()
+            ),
+            ft.Tab(
+                text = "Besok",
+                content = ft.Column()
+            ),
+            ft.Tab(
+                text = "Lusa",
+                content = ft.Column()
+            ),
+        ]
+    )
+
     result_container = ft.Container(
-        content = ft.Text(value = "Testing"),
+        content = (result_rows := ft.Row(
+            controls = [top_info, bottom_info],
+            alignment = 'center',
+        )),
         border_radius = 20,
         bgcolor = ft.colors.AMBER_100,
         padding = ft.padding.all(100),
         on_click = open_search
     )
 
-    result_layer = ft.Container(
+    #------------
+    # Base Page
+    #------------    
+    front_layer = ft.Container(
         content = search_container,
         expand = True
     )
 
     front_page = ft.Container(
-        content= result_layer,
+        content= front_layer,
         image_src = time_ui.fg_image,
         image_fit = ft.ImageFit.COVER,
         image_opacity = 0.8,
@@ -192,7 +227,7 @@ def main(page: ft.Page):
         )        
     )   
     #------------
-    # Assembling
+    # Base Page
     #------------
     base_page = ft.Container(
         content = front_page,
@@ -204,7 +239,9 @@ def main(page: ft.Page):
         alignment = ft.alignment.center,
         padding = ft.padding.only(left = 80, top = 80, right = 80, bottom = 100)
     )
-
+    #------------
+    # Assembling
+    #------------
     page.add(base_page)
 
     showtime()
