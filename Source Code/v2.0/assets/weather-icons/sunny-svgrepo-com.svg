@@ -1,2 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-<svg fill="#000000" width="800px" height="800px" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg"><defs><style>.cls-1{fill:none;}</style></defs><title>sunny</title><path d="M16,12a4,4,0,1,1-4,4,4.0045,4.0045,0,0,1,4-4m0-2a6,6,0,1,0,6,6,6,6,0,0,0-6-6Z" transform="translate(0 0.0049)"/><rect x="6.8536" y="5.3745" width="1.9998" height="4.958" transform="translate(-3.253 7.8584) rotate(-45)"/><rect x="2" y="15.0049" width="5" height="2"/><rect x="5.3745" y="23.1466" width="4.958" height="1.9998" transform="translate(-14.7739 12.6305) rotate(-45)"/><rect x="15" y="25.0049" width="2" height="5"/><rect x="23.1466" y="21.6675" width="1.9998" height="4.958" transform="translate(-10.0018 24.1514) rotate(-45)"/><rect x="25" y="15.0049" width="5" height="2"/><rect x="21.6675" y="6.8536" width="4.958" height="1.9998" transform="translate(1.5191 19.3793) rotate(-45)"/><rect x="15" y="2.0049" width="2" height="5"/><rect id="_Transparent_Rectangle_" data-name="&lt;Transparent Rectangle&gt;" class="cls-1" width="32" height="32"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="800px"
+   height="800px"
+   viewBox="0 0 32 32"
+   id="icon"
+   version="1.1"
+   sodipodi:docname="sunny-svgrepo-com.svg"
+   inkscape:version="1.1.2 (b8e25be833, 2022-02-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview28"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="0.89875"
+     inkscape:cx="400"
+     inkscape:cy="399.44367"
+     inkscape:window-width="2240"
+     inkscape:window-height="1306"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="icon" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:none;}</style>
+  </defs>
+  <title
+     id="title6">sunny</title>
+  <path
+     d="M16,12a4,4,0,1,1-4,4,4.0045,4.0045,0,0,1,4-4m0-2a6,6,0,1,0,6,6,6,6,0,0,0-6-6Z"
+     transform="translate(0 0.0049)"
+     id="path8" />
+  <rect
+     x="6.8536"
+     y="5.3745"
+     width="1.9998"
+     height="4.958"
+     transform="translate(-3.253 7.8584) rotate(-45)"
+     id="rect10" />
+  <rect
+     x="2"
+     y="15.0049"
+     width="5"
+     height="2"
+     id="rect12" />
+  <rect
+     x="5.3745"
+     y="23.1466"
+     width="4.958"
+     height="1.9998"
+     transform="translate(-14.7739 12.6305) rotate(-45)"
+     id="rect14" />
+  <rect
+     x="15"
+     y="25.0049"
+     width="2"
+     height="5"
+     id="rect16" />
+  <rect
+     x="23.1466"
+     y="21.6675"
+     width="1.9998"
+     height="4.958"
+     transform="translate(-10.0018 24.1514) rotate(-45)"
+     id="rect18" />
+  <rect
+     x="25"
+     y="15.0049"
+     width="5"
+     height="2"
+     id="rect20" />
+  <rect
+     x="21.6675"
+     y="6.8536"
+     width="4.958"
+     height="1.9998"
+     transform="translate(1.5191 19.3793) rotate(-45)"
+     id="rect22" />
+  <rect
+     x="15"
+     y="2.0049"
+     width="2"
+     height="5"
+     id="rect24" />
+</svg>

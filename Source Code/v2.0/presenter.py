@@ -4,8 +4,9 @@ from getpass import getuser
 from dataclasses import dataclass
 import flet as ft
 import literaldata
+import locale
 
-from copy import copy
+locale.setlocale(locale.LC_ALL, 'ID')
 
 day_tag = literaldata.DAY_TAG
 city_dict = literaldata.CITY_PARAM
@@ -134,16 +135,22 @@ def view_data(param: str, main_color: str, expansion: int):
     
     if not isinstance(connect.connection, ConnError):    
         today = [weather_block(data, main_color) for data in connect.scraping(day_tag['HARI INI'])]
+        highlight = today[0] if len(today) > 1 else ft.Column()
+        bottom_today = today[1:] if len(today) > 0 else []
         tomorrow = [weather_block(data, main_color) for data in connect.scraping(day_tag['BESOK'])]
         overmorrow = [weather_block(data, main_color ) for data in connect.scraping(day_tag['LUSA'])]
 
-        return ft.Tabs(
+        tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
+        tabs_tomorrow = [weather_container(day) for day in tomorrow]
+        tabs_overmorrow = [weather_container(day) for day in overmorrow]
+
+        return highlight, ft.Tabs(
             expand = expansion,
             tabs = [
                 ft.Tab(
                     text = dt.now().strftime("%a, %d %b %Y"),
                     content = ft.Row(
-                        controls = [weather_container(day) for day in today],
+                        controls = tabs_today,
                         alignment = 'start',
                         vertical_alignment = 'center',
                         spacing = 15,
@@ -153,7 +160,7 @@ def view_data(param: str, main_color: str, expansion: int):
                 ft.Tab(
                     text = (dt.now() + td(1)).strftime("%a, %d %b %Y"),
                     content = ft.Row(
-                        controls = [weather_container(day) for day in tomorrow],
+                        controls = tabs_tomorrow,
                         alignment = 'start',
                         vertical_alignment = 'center',
                         spacing = 15,
@@ -163,7 +170,7 @@ def view_data(param: str, main_color: str, expansion: int):
                 ft.Tab(
                     text = (dt.now() + td(2)).strftime("%a, %d %b %Y"),
                     content = ft.Row(
-                        controls = [weather_container(day) for day in overmorrow],
+                        controls = tabs_overmorrow,
                         alignment = 'start',
                         vertical_alignment = 'center',
                         spacing = 15,
@@ -191,10 +198,8 @@ def main(page: ft.Page):
     page.window_resizable = False
     page.bgcolor = ft.colors.AMBER_50
     page.padding = ft.padding.all(50)
-    example = view_data('AreaID=5010159', 'blue', 1)
-
-    focus_data = example.tabs[0].content.controls.pop(0)
-    focus_data.scale = 1.5
+    highlight, example = view_data('AreaID=5007677', 'blue', 1)    
+    highlight.scale = 1.5
 
     top = ft.Container(
         content = ft.Column(
@@ -205,7 +210,7 @@ def main(page: ft.Page):
                     size = 24,
                     weight = 'w800'
                 ),
-                focus_data
+                highlight
             ],
             alignment = 'center',
             horizontal_alignment = 'center',
