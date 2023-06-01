@@ -133,7 +133,7 @@ def view_data(param: str, main_color: str, expansion: int):
     """Accessing BMKG and transform their data into information in widgets"""
     connect = BMKGScraper(param)
     
-    if not isinstance(connect.connection, ConnError):    
+    if connect.is_data:    
         today = [weather_block(data, main_color) for data in connect.scraping(day_tag['HARI INI'])]
         highlight = today[0] if len(today) > 1 else ft.Column()
         bottom_today = today[1:] if len(today) > 0 else []
@@ -183,6 +183,32 @@ def view_data(param: str, main_color: str, expansion: int):
             divider_color = 'white',
             indicator_border_radius = 15
         )
+    else:
+        return ft.Container(
+            expand = expansion,
+            content = ft.Column(
+                controls = [
+                    ft.Text(
+                        connect.connection.problem,
+                        size = 24,
+                        color = main_color,
+                        text_align = 'center',
+                        weight = 'w800'
+                    ),
+                    ft.Text(
+                        connect.connection.error_type,
+                        size = 18,
+                        color = main_color,
+                        text_align = 'center'
+
+                    )
+                ],
+                alignment = 'center',
+                horizontal_alignment = 'center'
+            ),
+            bgcolor = ft.colors.TRANSPARENT,
+            padding = ft.padding.all(20),            
+        )
 
 # ----------------
 # Showing data from model to viewer
@@ -198,8 +224,14 @@ def main(page: ft.Page):
     page.window_resizable = False
     page.bgcolor = ft.colors.AMBER_50
     page.padding = ft.padding.all(50)
-    highlight, example = view_data('AreaID=5007677', 'blue', 1)    
-    highlight.scale = 1.5
+    data = view_data('AreaID=5007677', 'blue', 1)
+
+    if isinstance(data, tuple):
+        highlight, example = data
+        highlight.scale = 1.5
+    else:
+        highlight = ft.Container()
+        example = data
 
     top = ft.Container(
         content = ft.Column(
