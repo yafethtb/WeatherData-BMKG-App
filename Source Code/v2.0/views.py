@@ -184,7 +184,11 @@ def main(page: ft.Page):
     # Result layer widgets
     #------------
     left_widget = ft.Container(
-
+        bgcolor = ft.colors.BLUE_GREY_50,
+        opacity = 0.5,
+        padding = ft.padding.all(30),
+        margin = ft.margin.all(20),
+        border_radius = ft.border_radius.all(15)
     )
 
     right_widget = ft.Container(
@@ -203,7 +207,15 @@ def main(page: ft.Page):
                 ),
                 clock,
                 ft.Container(
-                    content = ...
+                    content = ft.Image(
+                        src = 'assets/arrow-right-square-svgrepo-com.svg',
+                        width = 100,
+                        height = 100,
+                        color = 'white'
+                    ),                    
+                    margin = ft.margin.all(20),
+                    bgcolor = ft.colors.TRANSPARENT,
+                    on_click = open_search
                 )
             ]
         )
