@@ -7092,5 +7092,7 @@ weather_icons = {
     'Hujan Ringan': 'assets/weather-icons/rain-drizzle-svgrepo-com.svg',
     'Hujan Sedang': 'assets/weather-icons/rain-svgrepo-com.svg',
     'Hujan Lebat': 'assets/weather-icons/rain-heavy-svgrepo-com.svg',
-    'Hujan Lokal': 'assets/weather-icons/rain-scattered-svgrepo-com.svg'
+    'Hujan Lokal': 'assets/weather-icons/rain-scattered-svgrepo-com.svg',
+    'Hujan Petir': 'assets/weather-icons/thunderstorm-strong-svgrepo-com.svg',
+    'Alert': 'assets/weather-icons/alert-triangle-svgrepo-com.svg'
 }

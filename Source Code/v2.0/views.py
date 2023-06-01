@@ -47,8 +47,26 @@ def main(page: ft.Page):
         option_value = search_option.value        
 
         if all([query_value, option_value]):
+            focus_data, tabs = view_data(option_value, 'black', 1)
+            focus_data.scale = 2
+            bottom_info.content = tabs
+            district_name.value = option_value
+            top_info.content = ft.Column(
+                controls = [
+                    ft.Text(
+                        dt.now().strftime("%a, %d %b %Y"),
+                        text_align = 'center',
+                        size = 24,
+                        weight = 'w800'
+                    ),
+                    focus_data
+                ],
+                alignment = 'center',
+                horizontal_alignment = 'center',
+                spacing = 20
+            )
+
             front_layer.content = result_container
-            result_container.content = ft.Text(value = search_option.value)
            
         else:
             search_query.error_text = "Mohon mengisi kolom ini"
@@ -102,9 +120,10 @@ def main(page: ft.Page):
                     content = ft.Column(
                         controls = [
                             ft.Image(
-                                src = 'assets\WeatherDataLogo.png',
+                                src = 'assets/logo.svg',
                                 color = time_ui.color.main_text_color,
-                                scale = 1.5
+                                height = 100,
+                                width = 267
                             ),
                             ft.Text(
                                 value = time_ui.message,
@@ -130,7 +149,7 @@ def main(page: ft.Page):
                     weight = 'w600',
                     text_align = ft.TextAlign.CENTER,
                     color = time_ui.color.secondary_text_color,
-                    expand = 1
+                    # expand = 1
                     ),
                 queries,           
                 ft.Row(
@@ -164,37 +183,60 @@ def main(page: ft.Page):
     #------------
     # Result layer widgets
     #------------
-    top_info = ft.Container(
-        expand = 7
+    left_widget = ft.Container(
+
     )
 
-    bottom_info = ft.Tabs(
-        expand = 3,
-        selected_index = 1,
-        tabs = [
-            ft.Tab(
-                text = "Hari ini",
-                content = ft.Column()
-            ),
-            ft.Tab(
-                text = "Besok",
-                content = ft.Column()
-            ),
-            ft.Tab(
-                text = "Lusa",
-                content = ft.Column()
-            ),
-        ]
+    right_widget = ft.Container(
+        content = ft.Column(
+            controls = [
+                district_name := ft.Text(
+                    size = 24,
+                    weight = 'w900',
+                    style = 'displayLarge',
+                ) ,
+                ft.Text(
+                    value = dt.now().strftime("%a, %d %b %Y"),
+                    text_align = 'center',
+                    size = 24,
+                    weight = 'w800'
+                ),
+                clock,
+                ft.Container(
+                    content = ...
+                )
+            ]
+        )
     )
+
+    top_info = ft.Container(
+        content = ft.Row(
+            controls = [
+                left_widget,
+                right_widget
+            ],
+            alignment = 'center',
+            # horizontal_alignment = 'center',
+            spacing = 20
+        ),
+        expand = 6,
+        alignment = ft.alignment.center,
+    )
+
+    bottom_info = ft.Container(
+        content = None,
+        expand = 4,
+        bgcolor = ft.colors.BLUE_GREY_50, # GANTI WARNANYA MENGIKUTI WAKTU!!!
+        opacity = 0.5
+    )
+    
 
     result_container = ft.Container(
-        content = (result_rows := ft.Row(
+        content = ft.Column(
             controls = [top_info, bottom_info],
             alignment = 'center',
-        )),
+        ),
         border_radius = 20,
-        bgcolor = ft.colors.AMBER_100,
-        padding = ft.padding.all(100),
         on_click = open_search
     )
 

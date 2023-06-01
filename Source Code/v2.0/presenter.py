@@ -118,6 +118,7 @@ def weather_block(data: Weatherdata, main_color: str):
         ],
         alignment = 'center',
         horizontal_alignment = 'center',
+        opacity = 1,
         expand = True
     )
 
@@ -131,15 +132,17 @@ def weather_container(control: ft.Column) -> ft.Container:
     
 def view_data(param: str, main_color: str, expansion: int):
     """Accessing BMKG and transform their data into information in widgets"""
-    connect = BMKGScraper(param)
+    area_id = city_dict[param]
+    connect = BMKGScraper(area_id)
     
     if connect.is_data:    
         today = [weather_block(data, main_color) for data in connect.scraping(day_tag['HARI INI'])]
-        highlight = today[0] if len(today) > 1 else ft.Column()
-        bottom_today = today[1:] if len(today) > 0 else []
         tomorrow = [weather_block(data, main_color) for data in connect.scraping(day_tag['BESOK'])]
         overmorrow = [weather_block(data, main_color ) for data in connect.scraping(day_tag['LUSA'])]
 
+        highlight = today[0] if len(today) > 1 else ft.Column()
+        bottom_today = today[1:] if len(today) > 0 else []
+        
         tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
         tabs_tomorrow = [weather_container(day) for day in tomorrow]
         tabs_overmorrow = [weather_container(day) for day in overmorrow]
@@ -181,10 +184,17 @@ def view_data(param: str, main_color: str, expansion: int):
             label_color = main_color,
             indicator_color = main_color,
             divider_color = 'white',
-            indicator_border_radius = 15
+            indicator_border_radius = 15,
+            opacity = 1
         )
     else:
-        return ft.Container(
+        return ft.Image(
+            src = literaldata.weather_icons['Alert'],
+            width = 150,
+            height = 150,
+            color= main_color,
+            tooltip = connect.connection.problem
+        ), ft.Container(
             expand = expansion,
             content = ft.Column(
                 controls = [
@@ -224,15 +234,11 @@ def main(page: ft.Page):
     page.window_resizable = False
     page.bgcolor = ft.colors.AMBER_50
     page.padding = ft.padding.all(50)
-    data = view_data('AreaID=5007677', 'blue', 1)
+    data = view_data("Biringkanaya - Kota Makasar", 'blue', 1)
 
-    if isinstance(data, tuple):
-        highlight, example = data
-        highlight.scale = 1.5
-    else:
-        highlight = ft.Container()
-        example = data
-
+    highlight, example = data
+    highlight.scale = 1.5
+    
     top = ft.Container(
         content = ft.Column(
             controls = [
