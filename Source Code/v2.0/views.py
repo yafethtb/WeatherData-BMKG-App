@@ -20,6 +20,9 @@ def main(page: ft.Page):
         'josefin_sans': '/fonts/JosefinSans-Regular.ttf',
         'playfair': '/fonts/Playfair_144pt-Regular.ttf',
         'work_sans': '/fonts/WorkSans-Regular.ttf',
+        'volkorn': '/fonts/VollkornSC-Black.ttf',
+        'bebas_neue': '/fonts/BebasNeue-Regular.ttf',
+        'outfit': '/fonts/Outfit-Thin.ttf'
     }
     page.update()
     #------------
@@ -29,7 +32,6 @@ def main(page: ft.Page):
 
     def showtime():
         while True:
-            clock.value = dt.now().strftime("%H:%M:%S")
             result_clock.value = dt.now().strftime("%H:%M:%S")
             page.update()
             sleep(1)
@@ -48,11 +50,17 @@ def main(page: ft.Page):
         option_value = search_option.value        
 
         if all([query_value, option_value]):
-            focus_data, tabs = view_data(option_value, 'black', 1)
+            focus_data, tabs = view_data(
+                option_value, 
+                time_ui.color.result_main_text_color,
+                'josefin_sans',
+                'outfit',
+                1
+            )
+
             focus_data.scale = 1.5
             bottom_info.content = tabs
             district_name.value = option_value
-            # TOP INFO DI SINI
             left_widget.content = focus_data
 
             front_layer.content = result_container
@@ -116,8 +124,8 @@ def main(page: ft.Page):
                             ),
                             ft.Text(
                                 value = time_ui.message,
-                                font_family = 'josefin_sans',
-                                size = 24,
+                                font_family = 'volkorn',
+                                size = 36,
                                 text_align = 'justify',
                                 weight = 'w500',
                                 color = time_ui.color.main_text_color,
@@ -140,26 +148,8 @@ def main(page: ft.Page):
                     color = time_ui.color.secondary_text_color,
                     # expand = 1
                     ),
-                queries,           
-                ft.Row(
-                    controls = [
-                        date := ft.Text(
-                            value = dt.now().strftime("%a, %d %b %Y"),
-                            size = 18,
-                            font_family = 'josefin_sans',
-                            weight = 'w500'
-                        ),
-                        clock := ft.Text(
-                            size = 18,
-                            font_family = 'josefin_sans',
-                            weight = 'w500'
-                        )
-                    ],
-                    alignment = 'spaceAround',
-                    vertical_alignment = 'center',
-                    spacing = 30,
-                    expand = 1
-                ),
+                queries,         
+                
             ],
             alignment = 'center_top',
             horizontal_alignment = 'stretch'        
@@ -173,11 +163,10 @@ def main(page: ft.Page):
     # Result layer widgets
     #------------
     left_widget = ft.Container(
-        bgcolor = ft.colors.BLUE_GREY_50,
-        opacity = 0.5,
+        bgcolor = time_ui.color.result_container_bg_color,
+        opacity = 0.8,
         padding = ft.padding.all(30),
         width = 200,        
-        # margin = ft.margin.all(20),
         border_radius = ft.border_radius.all(15)
     )
 
@@ -186,30 +175,33 @@ def main(page: ft.Page):
             controls = [
                 district_name := ft.Text(
                     size = 24,
-                    weight = 'w500',
+                    weight = 'w600',
                     style = 'displayLarge',
                     text_align = ft.TextAlign.RIGHT,
-                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
+                    color = time_ui.color.result_main_text_color,
+                    font_family = 'volkorn'
                 ) ,
                 ft.Text(
                     value = dt.now().strftime("%a, %d %b %Y"),
                     size = 18,
                     weight = 'w300',
                     text_align = ft.TextAlign.RIGHT,
-                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
+                    color = time_ui.color.result_main_text_color,
+                    font_family = 'work_sans'
                 ),                
                 result_clock := ft.Text(
                     size = 18,
                     weight = 'w300',
                     text_align = ft.TextAlign.RIGHT,
-                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
+                    color = time_ui.color.result_main_text_color,
+                    font_family = 'work_sans'
                 ),
                 ft.Container(
                     content = ft.Image(
                         src = 'assets/arrow-right-square-svgrepo-com.svg',
                         width = 100,
                         height = 100,
-                        color = 'white',
+                        color = time_ui.color.result_main_text_color,
                         tooltip = 'Kembali ke pencarian'
                     ),   
                     alignment = ft.alignment.center,
@@ -232,7 +224,6 @@ def main(page: ft.Page):
                 right_widget
             ],
             alignment = ft.MainAxisAlignment.SPACE_BETWEEN,
-            # horizontal_alignment = 'center',
             spacing = 20
         ),
         expand = 6,
@@ -244,10 +235,9 @@ def main(page: ft.Page):
     bottom_info = ft.Container(
         content = None,
         expand = 4,
-        bgcolor = ft.colors.BLUE_GREY_50, # GANTI WARNANYA MENGIKUTI WAKTU!!!
-        opacity = 0.5
-    )
-    
+        bgcolor = time_ui.color.result_container_bg_color,
+        opacity = 0.8
+    )    
 
     result_container = ft.Container(
         content = ft.Column(

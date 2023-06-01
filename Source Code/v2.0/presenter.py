@@ -16,7 +16,7 @@ class ColorPalette:
     main_text_color: str
     secondary_text_color: str
     result_main_text_color: str
-    result_secondary_text_color: str
+    result_container_bg_color: str
 
 @dataclass
 class PeriodicTimeUI:
@@ -65,7 +65,7 @@ def periodic_ui():
             f"Selamat Malam, {getuser()}!",
             literaldata.images['night-bg'],
             literaldata.images['night-fg'],
-            ColorPalette("#1B2A3A", "#28343E", "black", "black"),            
+            ColorPalette("#1B2A3A", "#28343E", "#f9f871", "#907b9d"),            
         )
 
 # ----------------
@@ -78,42 +78,46 @@ def populate_city(query):
 # ----------------
 # Data responding from model
 # ----------------    
-def weather_block(data: Weatherdata, main_color: str):
+def weather_block(data: Weatherdata, primary_font: str, secondary_font: str, main_color: str):
     """Create basic widget to contain data from Weatherdata class"""
     return ft.Column(
         controls = [
             ft.Text(
                 value = data.hour,
-                size = 18,
+                size = 24,
                 color= main_color,
-                font_family = ...,
+                font_family = primary_font,
                 text_align = 'center',
-                weight = 'w400',
+                weight = 'w800',
+                opacity = 1
             ),
             ft.Image(
                 src = literaldata.weather_icons[data.weather],
                 width = 50,
                 height = 50,
                 color= main_color,
-                tooltip = data.weather
+                tooltip = data.weather,
+                opacity = 1
             ),
             ft.Text(
                 value = data.temperature,                
                 size = 18,
                 color= main_color,
-                font_family = ...,
+                font_family = secondary_font,
                 text_align = 'center',
-                tooltip = 'Temperature',
-                weight = 'w800'
+                tooltip = 'Suhu',
+                weight = 'w800',
+                opacity = 1
             ),                              
             ft.Text(
                 value = data.humidity,              
                 size = 16,
                 color= main_color,
-                font_family = ...,
+                font_family = secondary_font,
                 text_align = 'center',
-                tooltip = 'Humidity',
-                weight = 'w800'            
+                tooltip = 'Kelembaban',
+                weight = 'w800',
+                opacity = 1
             ),
         ],
         alignment = 'center',
@@ -130,15 +134,15 @@ def weather_container(control: ft.Column) -> ft.Container:
         bgcolor = ft.colors.TRANSPARENT
     )
     
-def view_data(param: str, main_color: str, expansion: int):
+def view_data(param: str, main_color: str, primary_font: str, secondary_font: str,  expansion: int):
     """Accessing BMKG and transform their data into information in widgets"""
     area_id = city_dict[param]
     connect = BMKGScraper(area_id)
     
     if connect.is_data:    
-        today = [weather_block(data, main_color) for data in connect.scraping(day_tag['HARI INI'])]
-        tomorrow = [weather_block(data, main_color) for data in connect.scraping(day_tag['BESOK'])]
-        overmorrow = [weather_block(data, main_color ) for data in connect.scraping(day_tag['LUSA'])]
+        today = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['HARI INI'])]
+        tomorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['BESOK'])]
+        overmorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['LUSA'])]
 
         highlight = today[0] if len(today) > 1 else ft.Column()
         bottom_today = today[1:] if len(today) > 0 else []
@@ -203,14 +207,15 @@ def view_data(param: str, main_color: str, expansion: int):
                         size = 24,
                         color = main_color,
                         text_align = 'center',
-                        weight = 'w800'
+                        weight = 'w800',
+                        opacity = 1
                     ),
                     ft.Text(
                         connect.connection.error_type,
                         size = 18,
                         color = main_color,
-                        text_align = 'center'
-
+                        text_align = 'center',
+                        opacity = 1
                     )
                 ],
                 alignment = 'center',
