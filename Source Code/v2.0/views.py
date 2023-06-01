@@ -30,6 +30,7 @@ def main(page: ft.Page):
     def showtime():
         while True:
             clock.value = dt.now().strftime("%H:%M:%S")
+            result_clock.value = dt.now().strftime("%H:%M:%S")
             page.update()
             sleep(1)
 
@@ -48,23 +49,11 @@ def main(page: ft.Page):
 
         if all([query_value, option_value]):
             focus_data, tabs = view_data(option_value, 'black', 1)
-            focus_data.scale = 2
+            focus_data.scale = 1.5
             bottom_info.content = tabs
             district_name.value = option_value
-            top_info.content = ft.Column(
-                controls = [
-                    ft.Text(
-                        dt.now().strftime("%a, %d %b %Y"),
-                        text_align = 'center',
-                        size = 24,
-                        weight = 'w800'
-                    ),
-                    focus_data
-                ],
-                alignment = 'center',
-                horizontal_alignment = 'center',
-                spacing = 20
-            )
+            # TOP INFO DI SINI
+            left_widget.content = focus_data
 
             front_layer.content = result_container
            
@@ -187,7 +176,8 @@ def main(page: ft.Page):
         bgcolor = ft.colors.BLUE_GREY_50,
         opacity = 0.5,
         padding = ft.padding.all(30),
-        margin = ft.margin.all(20),
+        width = 200,        
+        # margin = ft.margin.all(20),
         border_radius = ft.border_radius.all(15)
     )
 
@@ -196,29 +186,43 @@ def main(page: ft.Page):
             controls = [
                 district_name := ft.Text(
                     size = 24,
-                    weight = 'w900',
+                    weight = 'w500',
                     style = 'displayLarge',
+                    text_align = ft.TextAlign.RIGHT,
+                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
                 ) ,
                 ft.Text(
                     value = dt.now().strftime("%a, %d %b %Y"),
-                    text_align = 'center',
-                    size = 24,
-                    weight = 'w800'
+                    size = 18,
+                    weight = 'w300',
+                    text_align = ft.TextAlign.RIGHT,
+                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
+                ),                
+                result_clock := ft.Text(
+                    size = 18,
+                    weight = 'w300',
+                    text_align = ft.TextAlign.RIGHT,
+                    color = 'white' # UBAH SESUAI DENGAN WAKTU!
                 ),
-                clock,
                 ft.Container(
                     content = ft.Image(
                         src = 'assets/arrow-right-square-svgrepo-com.svg',
                         width = 100,
                         height = 100,
-                        color = 'white'
-                    ),                    
-                    margin = ft.margin.all(20),
+                        color = 'white',
+                        tooltip = 'Kembali ke pencarian'
+                    ),   
+                    alignment = ft.alignment.center,
                     bgcolor = ft.colors.TRANSPARENT,
                     on_click = open_search
                 )
-            ]
-        )
+            ],
+            alignment = 'start',
+            horizontal_alignment = 'end'
+        ),
+        alignment = ft.alignment.top_right,
+        padding = ft.padding.all(20),
+        margin = ft.margin.all(20),
     )
 
     top_info = ft.Container(
@@ -227,12 +231,14 @@ def main(page: ft.Page):
                 left_widget,
                 right_widget
             ],
-            alignment = 'center',
+            alignment = ft.MainAxisAlignment.SPACE_BETWEEN,
             # horizontal_alignment = 'center',
             spacing = 20
         ),
         expand = 6,
-        alignment = ft.alignment.center,
+        alignment = ft.alignment.top_center,
+        padding = ft.padding.all(20),
+        bgcolor = ft.colors.TRANSPARENT
     )
 
     bottom_info = ft.Container(
@@ -249,7 +255,6 @@ def main(page: ft.Page):
             alignment = 'center',
         ),
         border_radius = 20,
-        on_click = open_search
     )
 
     #------------

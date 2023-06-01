@@ -84,11 +84,11 @@ def weather_block(data: Weatherdata, main_color: str):
         controls = [
             ft.Text(
                 value = data.hour,
-                size = 24,
+                size = 18,
                 color= main_color,
                 font_family = ...,
                 text_align = 'center',
-                weight = 'w800'
+                weight = 'w400',
             ),
             ft.Image(
                 src = literaldata.weather_icons[data.weather],
