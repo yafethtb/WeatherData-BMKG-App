@@ -43,8 +43,7 @@ def periodic_ui():
             f"Selamat Pagi, {getuser()}!",
             literaldata.images['morning-bg'],
             literaldata.images['morning-fg'],
-            ColorPalette("#151C10", "#1A3017", "black", "black"),
-            
+            ColorPalette("#151C10", "#1A3017", "black", "black"),            
         )
     elif this_hour > 12 and this_hour <= 16:
         return PeriodicTimeUI(
@@ -121,7 +120,7 @@ def weather_block(data: Weatherdata, main_color: str):
         expand = True
     )
 
-def weather_container(control) -> ft.Container:
+def weather_container(control: ft.Column) -> ft.Container:
     """Create container to contain all weather_block's function result"""
     return ft.Container(
         content = control,
@@ -131,13 +130,12 @@ def weather_container(control) -> ft.Container:
     
 def view_data(param: str, main_color: str, expansion: int):
     """Accessing BMKG and transform their data into information in widgets"""
-    bmkg = BMKGScraper(param)
-    connection = bmkg.connection
-
-    if not isinstance(connection, ConnError):    
-        today = [weather_block(data, main_color) for data in bmkg.scraping(day_tag['HARI INI'])]
-        tomorrow = [weather_block(data, main_color) for data in bmkg.scraping(day_tag['BESOK'])]
-        overmorrow = [weather_block(data, main_color ) for data in bmkg.scraping(day_tag['LUSA'])]
+    connect = BMKGScraper(param)
+    
+    if not isinstance(connect.connection, ConnError):    
+        today = [weather_block(data, main_color) for data in connect.scraping(day_tag['HARI INI'])]
+        tomorrow = [weather_block(data, main_color) for data in connect.scraping(day_tag['BESOK'])]
+        overmorrow = [weather_block(data, main_color ) for data in connect.scraping(day_tag['LUSA'])]
 
         return ft.Tabs(
             expand = expansion,

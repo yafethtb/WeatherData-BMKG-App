@@ -18,9 +18,8 @@ class Weatherdata:
     weather: str
     humidity: str
 
-
-class BMKGScraper:
-    """"Scraping data from BMKG website"""
+class BMKGConnect:
+    """Connecting and asessing connection quality to BMKG website"""    
     def __init__(self, params) -> None:
         self.header = {
 			'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0',
@@ -49,8 +48,12 @@ class BMKGScraper:
         except requests.exceptions.HTTPError as errhttp:
             return ConnError(errhttp, 'Bad HTTP response')
         finally:
-            return response       
+            return response     
 
+class BMKGScraper:
+    """"Scraping data from BMKG website"""
+    def __init__(self, params) -> None:
+        self.connection = BMKGConnect(params).connection
 
     def scraping(self, tag):
         """Scrape data from BMKG website."""
@@ -76,4 +79,4 @@ class BMKGScraper:
                     humidity = humid,
                 )
 
-
+ 
