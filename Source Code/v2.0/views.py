@@ -46,10 +46,10 @@ def main(page: ft.Page):
         search_container.update()
 
     def open_result(e):
-        query_value = search_query.value
         option_value = search_option.value        
+        query_value = search_query.value
 
-        if all([query_value, option_value]):
+        if all([option_value, query_value]):
             focus_data, tabs = view_data(
                 option_value, 
                 time_ui.color.result_main_text_color,
@@ -68,10 +68,14 @@ def main(page: ft.Page):
         else:
             search_query.error_text = "Mohon mengisi kolom ini"
             search_option.error_text = "Mohon memilih salah satu pilihan"
-        
         page.update()
 
     def open_search(e):
+        search_query.error_text = None
+        search_option.error_text = None
+        search_query.value = None
+        search_option.value = None
+        search_option.visible = False
         front_layer.content = search_container
         page.update()
     #------------
@@ -129,8 +133,7 @@ def main(page: ft.Page):
                                 text_align = 'justify',
                                 weight = 'w500',
                                 color = time_ui.color.main_text_color,
-                                bgcolor = ft.colors.BLUE_GREY_200,
-                                opacity = 0.8
+                                opacity = 1
                             )                        
                         ],
                         alignment = 'start',
@@ -156,7 +159,7 @@ def main(page: ft.Page):
         ),
         border_radius = 10,
         padding = ft.padding.symmetric(horizontal = 150, vertical = 25),
-        bgcolor = ft.colors.BLUE_GREY_50,
+        bgcolor = time_ui.color.result_container_bg_color,
         opacity = 0.8,
     )
     #------------
@@ -166,42 +169,45 @@ def main(page: ft.Page):
         bgcolor = time_ui.color.result_container_bg_color,
         opacity = 0.8,
         padding = ft.padding.all(30),
-        width = 200,        
+        width = 300,        
         border_radius = ft.border_radius.all(15)
     )
 
     right_widget = ft.Container(
         content = ft.Column(
             controls = [
-                district_name := ft.Text(
-                    size = 24,
-                    weight = 'w600',
-                    style = 'displayLarge',
-                    text_align = ft.TextAlign.RIGHT,
-                    color = time_ui.color.result_main_text_color,
-                    font_family = 'volkorn'
-                ) ,
                 ft.Text(
                     value = dt.now().strftime("%a, %d %b %Y"),
-                    size = 18,
-                    weight = 'w300',
+                    size = 36,
+                    weight = 'w600',
                     text_align = ft.TextAlign.RIGHT,
-                    color = time_ui.color.result_main_text_color,
-                    font_family = 'work_sans'
+                    color = time_ui.color.secondary_text_color,
+                    font_family = 'josefin_sans',
+                    bgcolor = time_ui.color.result_container_bg_color
                 ),                
                 result_clock := ft.Text(
-                    size = 18,
+                    size = 36,
                     weight = 'w300',
                     text_align = ft.TextAlign.RIGHT,
-                    color = time_ui.color.result_main_text_color,
-                    font_family = 'work_sans'
+                    color = time_ui.color.secondary_text_color,
+                    font_family = 'work_sans',
+                    bgcolor = time_ui.color.result_container_bg_color
                 ),
+                district_name := ft.Text(
+                    size = 18,
+                    weight = 'w300',
+                    # style = 'displayLarge',
+                    text_align = ft.TextAlign.RIGHT,
+                    color = time_ui.color.main_text_color,
+                    font_family = 'josefin_sans',
+                    bgcolor = time_ui.color.result_container_bg_color
+                ) ,
                 ft.Container(
                     content = ft.Image(
                         src = 'assets/arrow-right-square-svgrepo-com.svg',
                         width = 100,
                         height = 100,
-                        color = time_ui.color.result_main_text_color,
+                        color = time_ui.color.result_container_bg_color,
                         tooltip = 'Kembali ke pencarian'
                     ),   
                     alignment = ft.alignment.center,
@@ -236,7 +242,14 @@ def main(page: ft.Page):
         content = None,
         expand = 4,
         bgcolor = time_ui.color.result_container_bg_color,
-        opacity = 0.8
+        opacity = 0.8,
+        shadow = ft.BoxShadow(
+            spread_radius = 10,
+            blur_radius = 30,
+            blur_style = ft.ShadowBlurStyle.NORMAL,            
+            offset = ft.Offset(0, 0),
+            color = '#222222'
+        )   
     )    
 
     result_container = ft.Container(
@@ -260,7 +273,7 @@ def main(page: ft.Page):
         image_src = time_ui.fg_image,
         image_fit = ft.ImageFit.COVER,
         image_opacity = 0.8,
-        border_radius = 10,
+        border_radius = 20,
         alignment = ft.alignment.center,
         shadow = ft.BoxShadow(
             spread_radius = 10,

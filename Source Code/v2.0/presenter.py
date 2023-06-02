@@ -37,35 +37,35 @@ def periodic_ui():
             f"Selamat subuh, {getuser()}!",
             literaldata.images['dawn-bg'],
             literaldata.images['dawn-fg'],
-            ColorPalette("#4E2D3D","#774B56", "black", "black")
+            ColorPalette("#4E2D3D","#774B56", "black", "white")
         )
     elif this_hour > 5 and this_hour <= 12:
         return PeriodicTimeUI(
             f"Selamat Pagi, {getuser()}!",
             literaldata.images['morning-bg'],
             literaldata.images['morning-fg'],
-            ColorPalette("#151C10", "#1A3017", "black", "black"),            
+            ColorPalette("#151C10", "#1A3017", "black", "white"),            
         )
     elif this_hour > 12 and this_hour <= 16:
         return PeriodicTimeUI(
             f"Selamat Siang, {getuser()}!",
             literaldata.images['noon-bg'],
             literaldata.images['noon-fg'],
-            ColorPalette("#0B1212", "#3B4444", "black", "black")           
+            ColorPalette("#0B1212", "#3B4444", "black", "white")           
         )
     elif this_hour > 16 and this_hour <= 19:
         return PeriodicTimeUI(
             f"Selamat Sore, {getuser()}!",
             literaldata.images['dawn-bg'],
             literaldata.images['dawn-fg'],
-            ColorPalette("#000733", "#292F6C", "black", "black")  
+            ColorPalette("#000733", "#292F6C", "black", "white")  
         )
     else:
         return PeriodicTimeUI(
             f"Selamat Malam, {getuser()}!",
             literaldata.images['night-bg'],
             literaldata.images['night-fg'],
-            ColorPalette("#1B2A3A", "#28343E", "#f9f871", "#907b9d"),            
+            ColorPalette("#1B2A3A", "#28343E", "black", "white"),            
         )
 
 # ----------------
