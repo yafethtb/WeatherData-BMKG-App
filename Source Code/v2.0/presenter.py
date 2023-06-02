@@ -4,12 +4,13 @@ from getpass import getuser
 from dataclasses import dataclass
 import flet as ft
 import literaldata
-import locale
-
-locale.setlocale(locale.LC_ALL, 'ID')
 
 day_tag = literaldata.DAY_TAG
 city_dict = literaldata.CITY_PARAM
+
+# ----------------
+# Data classes for controling UI
+# ----------------
 
 @dataclass
 class ColorPalette:    
@@ -29,6 +30,11 @@ class PeriodicTimeUI:
 # Time functions
 # ----------------
 def periodic_ui():
+    """
+    UI behavior controller.
+
+    Return PeriodicTimeUI object with different data depends on the hour the user using the program.
+    """
     this_time = dt.now()
     this_hour = this_time.hour
 
@@ -75,11 +81,16 @@ def populate_city(query):
     """Populate city dropdown widget"""
     district_names = sorted(city_dict.keys())
     return [ft.dropdown.Option(city) for city in district_names if query.lower() in city.lower()]
+
 # ----------------
-# Data responding from model
+# Transforming data class into widgets
 # ----------------    
 def weather_block(data: Weatherdata, primary_font: str, secondary_font: str, main_color: str):
-    """Create basic widget to contain data from Weatherdata class"""
+    """Create basic widget to contain data from WeatherData class.
+    
+    It will transform data from WeatherData object into a collection of rows containing 
+    variable data from the object inside a column.
+    """
     return ft.Column(
         controls = [
             ft.Text(
@@ -133,9 +144,21 @@ def weather_container(control: ft.Column) -> ft.Container:
         padding = ft.padding.all(15),
         bgcolor = ft.colors.TRANSPARENT
     )
-    
+
+# ----------------
+# Connecting web scraper module and UI module
+# ----------------
 def view_data(param: str, main_color: str, primary_font: str, secondary_font: str,  expansion: int):
-    """Accessing BMKG and transform their data into information in widgets"""
+    """
+    Accessing BMKG and transform their data into information in widgets.
+    
+    When conected to internet and the website response status is OK, this program will return block of widgets of
+    today's, tomorrow's, and overmorrow's weather data in tabs.
+
+    If there is no internet connection or the response status is other than OK, this program will return 
+    the error message.
+
+    """
     area_id = city_dict[param]
     connect = BMKGScraper(area_id)
     
@@ -144,7 +167,7 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
         tomorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['BESOK'])]
         overmorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['LUSA'])]
 
-        highlight = today[0] if len(today) > 1 else ft.Column()
+        highlight = today[0] if len(today) > 0 else ft.Column()
         bottom_today = today[1:] if len(today) > 0 else []
         
         tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
@@ -224,56 +247,3 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
             bgcolor = ft.colors.TRANSPARENT,
             padding = ft.padding.all(20),            
         )
-
-# ----------------
-# Showing data from model to viewer
-# ----------------
-
-# Test
-
-def main(page: ft.Page):
-    page.title = "Testing"
-    page.window_width = 1200
-    page.window_height = 850
-    page.window_maximizable = False
-    page.window_resizable = False
-    page.bgcolor = ft.colors.AMBER_50
-    page.padding = ft.padding.all(50)
-    data = view_data("Biringkanaya - Kota Makasar", 'blue', 1)
-
-    highlight, example = data
-    highlight.scale = 1.5
-    
-    top = ft.Container(
-        content = ft.Column(
-            controls = [
-                ft.Text(
-                    dt.now().strftime("%a, %d %b %Y"),
-                    text_align = 'center',
-                    size = 24,
-                    weight = 'w800'
-                ),
-                highlight
-            ],
-            alignment = 'center',
-            horizontal_alignment = 'center',
-            spacing = 20
-        ),
-        expand = 6,
-        alignment = ft.alignment.center,
-        bgcolor = ft.colors.AMBER_50,
-        padding = ft.padding.all(100)
-    )
-
-    bottom = ft.Container(
-        content = example,
-        expand = 4,
-        bgcolor = ft.colors.BLUE_GREY_50,
-        padding = ft.padding.all(20)
-    )
-
-    page.add(top, bottom)
-    page.update()
-
-if __name__ == '__main__':
-    ft.app(target = main)
