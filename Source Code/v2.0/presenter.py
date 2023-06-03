@@ -1,5 +1,6 @@
 from scrapermodule import *
 from datetime import datetime as dt, timedelta as td
+from time import gmtime, localtime
 from getpass import getuser
 from dataclasses import dataclass
 import flet as ft
@@ -62,8 +63,8 @@ def periodic_ui():
     elif this_hour > 16 and this_hour <= 19:
         return PeriodicTimeUI(
             f"Selamat Sore, {getuser()}!",
-            literaldata.images['dawn-bg'],
-            literaldata.images['dawn-fg'],
+            literaldata.images['dusk-bg'],
+            literaldata.images['dusk-fg'],
             ColorPalette("#000733", "#292F6C", "black", "white")  
         )
     else:
@@ -73,6 +74,12 @@ def periodic_ui():
             literaldata.images['night-fg'],
             ColorPalette("#1B2A3A", "#28343E", "black", "white"),            
         )
+
+def gmt_diff():
+    """Return GMT time difference"""
+    local_time = localtime().tm_hour
+    gmt_time = gmtime().tm_hour
+    return local_time - gmt_time
 
 # ----------------
 # Dropdown options from model
@@ -145,6 +152,16 @@ def weather_container(control: ft.Column) -> ft.Container:
         bgcolor = ft.colors.TRANSPARENT
     )
 
+def day_scraping(weather: Weatherdata, main_color: str, primary_font: str, secondary_font: str ):
+    """Sraping the website and return simple data"""
+    d = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D'])]
+    d1 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D1'])]
+    d2 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D2'])]
+    d3 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D3'])]
+
+    return d, d1, d2, d3
+    
+
 # ----------------
 # Connecting web scraper module and UI module
 # ----------------
@@ -161,19 +178,29 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
     """
     area_id = city_dict[param]
     connect = BMKGScraper(area_id)
-    
+    gmt_time = gmt_diff()
+    now = dt.now()
+   
     if connect.is_data:    
-        today = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['HARI INI'])]
-        tomorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['BESOK'])]
-        overmorrow = [weather_block(data, primary_font, secondary_font, main_color) for data in connect.scraping(day_tag['LUSA'])]
+        d, d1, d2, d3 = day_scraping(connect, main_color, primary_font, secondary_font)
 
-        highlight = today[0] if len(today) > 0 else ft.Column()
-        bottom_today = today[1:] if len(today) > 0 else []
-        
+        highlight = d[0] if len(d) > 0 else ft.Column()
+        bottom_today = d[1:] if len(d) > 0 else []        
         tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
-        tabs_tomorrow = [weather_container(day) for day in tomorrow]
-        tabs_overmorrow = [weather_container(day) for day in overmorrow]
+        tabs_tomorrow = [weather_container(day) for day in d1]
+        tabs_overmorrow = [weather_container(day) for day in d2]
 
+        # Untuk mengatasi tanggal tab berubah tapi data dalam tab tidak mengikuti tanggal
+        wita_transition = gmt_time == 8 and (now.hour >= 0 and now.hour < 1)
+        wit_transition = gmt_time == 9 and (now.hour >= 0 and now.hour < 2)
+
+        if wita_transition or wit_transition:
+            highlight = d1[0] if len(d1) > 0 else ft.Column()
+            bottom_today = d1[1:] if len(d1) > 0 else []        
+            tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
+            tabs_tomorrow = [weather_container(day) for day in d2]
+            tabs_overmorrow = [weather_container(day) for day in d3]
+        
         return highlight, ft.Tabs(
             expand = expansion,
             tabs = [

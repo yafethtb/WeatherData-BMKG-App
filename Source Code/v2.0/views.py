@@ -21,7 +21,6 @@ def main(page: ft.Page):
         'playfair': '/fonts/Playfair_144pt-Regular.ttf',
         'work_sans': '/fonts/WorkSans-Regular.ttf',
         'volkorn': '/fonts/VollkornSC-Black.ttf',
-        'bebas_neue': '/fonts/BebasNeue-Regular.ttf',
         'outfit': '/fonts/Outfit-Thin.ttf'
     }
     page.update()
@@ -149,7 +148,6 @@ def main(page: ft.Page):
                     weight = 'w600',
                     text_align = ft.TextAlign.CENTER,
                     color = time_ui.color.secondary_text_color,
-                    # expand = 1
                     ),
                 queries,         
                 
@@ -159,18 +157,24 @@ def main(page: ft.Page):
         ),
         border_radius = 10,
         padding = ft.padding.symmetric(horizontal = 150, vertical = 25),
-        bgcolor = time_ui.color.result_container_bg_color,
-        opacity = 0.8,
+        bgcolor = ft.colors.with_opacity(0.8,time_ui.color.result_container_bg_color)
     )
     #------------
     # Result layer widgets
     #------------
     left_widget = ft.Container(
-        bgcolor = time_ui.color.result_container_bg_color,
-        opacity = 0.8,
+        bgcolor = ft.colors.with_opacity(0.85, time_ui.color.result_container_bg_color),
         padding = ft.padding.all(30),
         width = 300,        
-        border_radius = ft.border_radius.all(15)
+        opacity = 0.8,
+        border_radius = ft.border_radius.all(15),
+        shadow = ft.BoxShadow(
+            spread_radius = 5,
+            blur_radius = 20,
+            blur_style = ft.ShadowBlurStyle.NORMAL,            
+            offset = ft.Offset(0, 0),
+            color = '#141e3c'
+        ) 
     )
 
     right_widget = ft.Container(
@@ -196,7 +200,6 @@ def main(page: ft.Page):
                 district_name := ft.Text(
                     size = 18,
                     weight = 'w300',
-                    # style = 'displayLarge',
                     text_align = ft.TextAlign.RIGHT,
                     color = time_ui.color.main_text_color,
                     font_family = 'josefin_sans',
@@ -241,14 +244,14 @@ def main(page: ft.Page):
     bottom_info = ft.Container(
         content = None,
         expand = 4,
-        bgcolor = time_ui.color.result_container_bg_color,
+        bgcolor = ft.colors.with_opacity(0.85, time_ui.color.result_container_bg_color),
         opacity = 0.8,
         shadow = ft.BoxShadow(
-            spread_radius = 10,
-            blur_radius = 30,
+            spread_radius = 5,
+            blur_radius = 20,
             blur_style = ft.ShadowBlurStyle.NORMAL,            
             offset = ft.Offset(0, 0),
-            color = '#222222'
+            color = '#141e3c'
         )   
     )    
 
@@ -269,6 +272,7 @@ def main(page: ft.Page):
     )
 
     front_page = ft.Container(
+        expand= 15,
         content= front_layer,
         image_src = time_ui.fg_image,
         image_fit = ft.ImageFit.COVER,
@@ -282,17 +286,31 @@ def main(page: ft.Page):
             offset = ft.Offset(0, 0),
             color = '#222222'
         )        
-    )   
+    )
+    
+    created_by = ft.Text(
+        value = "App version 2.0.   Data source from BMKG (https://www.bmkg.go.id).     Created by Yafeth (2023).",
+        color = 'white',
+        size = 14,
+        font_family = 'outfit',
+        weight = 'w200',
+        expand = 1
+    )
+
+    front = ft.Column(
+        controls = [front_page, created_by],
+        horizontal_alignment = 'center'
+    )
     #------------
     # Base Page
     #------------
     base_page = ft.Container(
-        content = front_page,
+        content = front,
         height = 850,
         width = 1200,      
         image_src = time_ui.bg_image,        
         image_fit = ft.ImageFit.COVER,
-        image_opacity = 0.8,
+        image_opacity = 0.9,
         alignment = ft.alignment.center,
         padding = ft.padding.only(left = 80, top = 80, right = 80, bottom = 100)
     )
