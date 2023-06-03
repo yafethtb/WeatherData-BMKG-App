@@ -84,10 +84,10 @@ def gmt_diff():
 # ----------------
 # Dropdown options from model
 # ----------------
-def populate_city(query):
+def populate_city(query: str):
     """Populate city dropdown widget"""
     district_names = sorted(city_dict.keys())
-    return [ft.dropdown.Option(city) for city in district_names if query.lower() in city.lower()]
+    return [ft.dropdown.Option(city) for city in district_names if query.strip().lower() in city.lower()]
 
 # ----------------
 # Transforming data class into widgets
@@ -161,7 +161,6 @@ def day_scraping(weather: Weatherdata, main_color: str, primary_font: str, secon
 
     return d, d1, d2, d3
     
-
 # ----------------
 # Connecting web scraper module and UI module
 # ----------------

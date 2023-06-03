@@ -2,10 +2,6 @@ import flet as ft
 from presenter import *
 from datetime import datetime as dt
 from time import sleep
-import locale
-
-locale.setlocale(locale.LC_ALL, 'ID')
-
 
 def main(page: ft.Page):
     #------------
@@ -18,7 +14,6 @@ def main(page: ft.Page):
     page.window_resizable = False
     page.fonts = {
         'josefin_sans': '/fonts/JosefinSans-Regular.ttf',
-        'playfair': '/fonts/Playfair_144pt-Regular.ttf',
         'work_sans': '/fonts/WorkSans-Regular.ttf',
         'volkorn': '/fonts/VollkornSC-Black.ttf',
         'outfit': '/fonts/Outfit-Thin.ttf'
@@ -148,6 +143,7 @@ def main(page: ft.Page):
                     weight = 'w600',
                     text_align = ft.TextAlign.CENTER,
                     color = time_ui.color.secondary_text_color,
+                    font_family = 'work_sans' 
                     ),
                 queries,         
                 
@@ -202,7 +198,7 @@ def main(page: ft.Page):
                     weight = 'w300',
                     text_align = ft.TextAlign.RIGHT,
                     color = time_ui.color.main_text_color,
-                    font_family = 'josefin_sans',
+                    font_family = 'work_sans',
                     bgcolor = time_ui.color.result_container_bg_color
                 ) ,
                 ft.Container(
@@ -292,7 +288,7 @@ def main(page: ft.Page):
         value = "App version 2.0.   Data source from BMKG (https://www.bmkg.go.id).     Created by Yafeth (2023).",
         color = 'white',
         size = 14,
-        font_family = 'outfit',
+        font_family = 'work_sans',
         weight = 'w200',
         expand = 1
     )
