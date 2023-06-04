@@ -157,9 +157,8 @@ def day_scraping(weather: Weatherdata, main_color: str, primary_font: str, secon
     d = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D'])]
     d1 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D1'])]
     d2 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D2'])]
-    d3 = [weather_block(data, primary_font, secondary_font, main_color) for data in weather.scraping(day_tag['D3'])]
 
-    return d, d1, d2, d3
+    return d, d1, d2
     
 # ----------------
 # Connecting web scraper module and UI module
@@ -179,9 +178,12 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
     connect = BMKGScraper(area_id)
     gmt_time = gmt_diff()
     now = dt.now()
+
+    zero = dt(now.year, now.month, now.day, 0, 0) 
+    two = dt(now.year, now.month, now.day, 2, 0) 
    
     if connect.is_data:    
-        d, d1, d2, d3 = day_scraping(connect, main_color, primary_font, secondary_font)
+        d, d1, d2 = day_scraping(connect, main_color, primary_font, secondary_font)
 
         highlight = d[0] if len(d) > 0 else ft.Column()
         bottom_today = d[1:] if len(d) > 0 else []        
@@ -190,21 +192,24 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
         tabs_overmorrow = [weather_container(day) for day in d2]
 
         # Untuk mengatasi tanggal tab berubah tapi data dalam tab tidak mengikuti tanggal
-        wita_transition = gmt_time == 8 and (now.hour >= 0 and now.hour < 1)
-        wit_transition = gmt_time == 9 and (now.hour >= 0 and now.hour < 2)
+        wita_transition = gmt_time == 8 and (now >= zero and now < two)
 
-        if wita_transition or wit_transition:
-            highlight = d1[0] if len(d1) > 0 else ft.Column()
-            bottom_today = d1[1:] if len(d1) > 0 else []        
-            tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
-            tabs_tomorrow = [weather_container(day) for day in d2]
-            tabs_overmorrow = [weather_container(day) for day in d3]
+        label_text_today = dt.now().strftime("%a, %d %b %Y")
+        label_text_tomorrow = (dt.now() + td(1)).strftime("%a, %d %b %Y") 
+        label_text_overmorrow = (dt.now() + td(2)).strftime("%a, %d %b %Y")
+
+        # Jika jam 00.00, label tab belum bergeser
+        # Hanya untuk GMT+8
+        if wita_transition:
+            label_text_today = (dt.now() + td(-1)).strftime("%a, %d %b %Y")
+            label_text_tomorrow = dt.now().strftime("%a, %d %b %Y") 
+            label_text_overmorrow = (dt.now() + td(1)).strftime("%a, %d %b %Y")        
         
         return highlight, ft.Tabs(
             expand = expansion,
             tabs = [
                 ft.Tab(
-                    text = dt.now().strftime("%a, %d %b %Y"),
+                    text = label_text_today,
                     content = ft.Row(
                         controls = tabs_today,
                         alignment = 'start',
@@ -214,7 +219,7 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
                     )
                 ),
                 ft.Tab(
-                    text = (dt.now() + td(1)).strftime("%a, %d %b %Y"),
+                    text = label_text_tomorrow,
                     content = ft.Row(
                         controls = tabs_tomorrow,
                         alignment = 'start',
@@ -224,7 +229,7 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
                     )
                 ),
                 ft.Tab(
-                    text = (dt.now() + td(2)).strftime("%a, %d %b %Y"),
+                    text = label_text_overmorrow,
                     content = ft.Row(
                         controls = tabs_overmorrow,
                         alignment = 'start',

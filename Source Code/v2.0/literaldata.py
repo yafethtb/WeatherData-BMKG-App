@@ -3,7 +3,6 @@ DAY_TAG = {
     'D': 'TabPaneCuaca1',
     'D1': 'TabPaneCuaca2',
     'D2': 'TabPaneCuaca3',
-    'D3': 'TabPaneCuaca4',
 }
 
 CITY_PARAM = {
