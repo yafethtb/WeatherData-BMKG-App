@@ -36,7 +36,7 @@ def periodic_ui():
 
     Return PeriodicTimeUI object with different data depends on the hour the user using the program.
     """
-    this_time = dt.now()
+    this_time = dt.today()
     this_hour = this_time.hour
 
     if this_hour > 1 and this_hour <= 5:
@@ -177,33 +177,34 @@ def view_data(param: str, main_color: str, primary_font: str, secondary_font: st
     area_id = city_dict[param]
     connect = BMKGScraper(area_id)
     gmt_time = gmt_diff()
-    now = dt.now()
+    today = dt.today()
+    # PERMASALAHAN!
+    # Jam 23.00 WITA, semua data dalam tab untuk area Indonesia Timur bergeser, tapi label tab belum berganti.
+    # Jam 00.00 WITA, label tab sudah bergeser, tapi data tab tidak mengikuti.
 
-    zero = dt(now.year, now.month, now.day, 0, 0) 
-    two = dt(now.year, now.month, now.day, 2, 0) 
-   
+    # Untuk mengatasi label tab berubah tapi data dalam tab tidak mengikuti label
+    
     if connect.is_data:    
         d, d1, d2 = day_scraping(connect, main_color, primary_font, secondary_font)
-
+        # Isi Tab
         highlight = d[0] if len(d) > 0 else ft.Column()
         bottom_today = d[1:] if len(d) > 0 else []        
         tabs_today = [weather_container(day) for day in bottom_today] if len(bottom_today) > 0 else None
         tabs_tomorrow = [weather_container(day) for day in d1]
-        tabs_overmorrow = [weather_container(day) for day in d2]
-
-        # Untuk mengatasi tanggal tab berubah tapi data dalam tab tidak mengikuti tanggal
-        wita_transition = gmt_time == 8 and (now >= zero and now < two)
-
-        label_text_today = dt.now().strftime("%a, %d %b %Y")
-        label_text_tomorrow = (dt.now() + td(1)).strftime("%a, %d %b %Y") 
-        label_text_overmorrow = (dt.now() + td(2)).strftime("%a, %d %b %Y")
+        tabs_overmorrow = [weather_container(day) for day in d2]       
+        # Label Tab
+        label_text_today = dt.today().strftime("%a, %d %b %Y")
+        label_text_tomorrow = (dt.today() + td(1)).strftime("%a, %d %b %Y") 
+        label_text_overmorrow = (dt.today() + td(2)).strftime("%a, %d %b %Y")
 
         # Jika jam 00.00, label tab belum bergeser
         # Hanya untuk GMT+8
+        wita_transition = (gmt_time == 8) and (today.hour >= 0 and today.hour < 2)
+   
         if wita_transition:
-            label_text_today = (dt.now() + td(-1)).strftime("%a, %d %b %Y")
-            label_text_tomorrow = dt.now().strftime("%a, %d %b %Y") 
-            label_text_overmorrow = (dt.now() + td(1)).strftime("%a, %d %b %Y")        
+            label_text_today = (dt.today() - td(1)).strftime("%a, %d %b %Y")
+            label_text_tomorrow = dt.today().strftime("%a, %d %b %Y") 
+            label_text_overmorrow = (dt.today() + td(1)).strftime("%a, %d %b %Y")        
         
         return highlight, ft.Tabs(
             expand = expansion,
