@@ -285,7 +285,7 @@ def main(page: ft.Page):
     )
     
     created_by = ft.Text(
-        value = "App version 2.0.   Data source from BMKG (https://www.bmkg.go.id).     Created by Yafeth (2023).",
+        value = "App version 2.0.1   Data source from BMKG (https://www.bmkg.go.id).     Created by Yafeth (2023).",
         color = 'white',
         size = 14,
         font_family = 'work_sans',
