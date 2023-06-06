@@ -55,7 +55,7 @@ class BMKGScraper:
         self.is_data = True if isinstance(self.connection, requests.Response) else False
 
     def scraping(self, tag):
-        """Scrape data from BMKG website, when the connection result is exist."""
+        """Scraping data from BMKG website, if the connection result is exist."""
         if self.is_data:
             content = self.connection.content
             soup = bs(content, 'html.parser')
@@ -78,3 +78,14 @@ class BMKGScraper:
                 )
         else:
             return self.connection
+        
+    def label_scraping(self, tag: str ) -> str:
+        """Scraping tab's label/name"""
+        if self.is_data:
+            content = self.connection.content
+            soup = bs(content, 'html.parser')
+            raw = soup.find('a', attrs = {'href': f'#{tag}'})
+            return raw.text
+        else: 
+            return "No Label"
+        
